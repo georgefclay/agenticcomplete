@@ -1,0 +1,50 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main class="wrapper document-page">
+  <h1>Evaluation Framework</h1>
+  <p class="lead">Agentic Complete status requires successful performance across all core evaluation domains.</p>
+
+  <section>
+    <h2>Evaluation Domains</h2>
+    <ol>
+      <li><strong>Goal Continuity</strong> — The system maintains objective state across transitions and interruptions.</li>
+      <li><strong>Planning Capability</strong> — The system produces and revises multi-step plans.</li>
+      <li><strong>Execution Authority</strong> — The system acts without human approval prompts during normal operation.</li>
+      <li><strong>Feedback Interpretation</strong> — The system detects outcome quality, failure states, and incomplete results.</li>
+      <li><strong>Adaptive Response</strong> — The system modifies approach when conditions change.</li>
+      <li><strong>Completion Determination</strong> — The system independently determines whether the goal has been fulfilled.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Checklist</h2>
+    <div class="checklist">
+      <p><input type="checkbox" disabled> Maintains persistent task state</p>
+      <p><input type="checkbox" disabled> Can decompose abstract goals into executable steps</p>
+      <p><input type="checkbox" disabled> Executes actions through defined tools or interfaces</p>
+      <p><input type="checkbox" disabled> Observes and interprets results after each action</p>
+      <p><input type="checkbox" disabled> Replans after failure, ambiguity, or drift</p>
+      <p><input type="checkbox" disabled> Continues without human handoff</p>
+      <p><input type="checkbox" disabled> Verifies completion against explicit or inferred criteria</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Disqualification Conditions</h2>
+    <ul>
+      <li>Human approval is required between planning and execution.</li>
+      <li>The system cannot recover from common failure states.</li>
+      <li>The system cannot determine whether the task has ended.</li>
+      <li>The system loses continuity when environment state changes.</li>
+      <li>The system executes actions but cannot revise strategy.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pass Logic</h2>
+    <p>Failure in any core domain disqualifies Agentic Complete status. The threshold is conjunctive rather than additive.</p>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

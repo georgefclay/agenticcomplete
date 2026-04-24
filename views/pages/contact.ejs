@@ -1,0 +1,28 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main class="wrapper document-page narrow-page">
+  <h1>Contact</h1>
+  <p class="lead">For technical feedback, framework clarification, or general discussion.</p>
+
+  <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="<%= web3formsAccessKey %>">
+    <input type="hidden" name="subject" value="Agentic Complete Contact Form Submission">
+    <input type="hidden" name="from_name" value="Agentic Complete">
+
+    <label for="name">Name</label>
+    <input id="name" type="text" name="name" required>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email" required>
+
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="8" required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <p class="form-note">No tracking cookies. No mailing lists. Messages are used solely for correspondence.</p>
+</main>
+
+<%- include('../partials/footer') %>

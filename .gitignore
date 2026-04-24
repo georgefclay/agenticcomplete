@@ -1,0 +1,32 @@
+# ---- Secrets / env ----
+.env
+.env.*
+*.pem
+*.key
+
+# ---- Node ----
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+
+# ---- OS / editor cruft ----
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# ---- Operational data (private) ----
+# The policy files (VOICE.md, RULES.md, etc.) ARE committed — they are public
+# governance documentation. The subfolders below contain dynamic/private data
+# that should not be public.
+ops/alerts/
+ops/reports/
+ops/source-material/
+
+# ---- Local build artifacts ----
+dist/
+build/
+*.log

@@ -1,0 +1,62 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main class="wrapper document-page">
+  <h1>Architectural Requirements</h1>
+  <p class="lead">Agentic Complete systems require a closed-loop architecture that preserves continuity from goal intake through verified completion.</p>
+
+  <section>
+    <h2>Required Components</h2>
+    <ul>
+      <li>Goal intake and normalization layer</li>
+      <li>State store for persistent objective tracking</li>
+      <li>Planning engine capable of decomposition and revision</li>
+      <li>Execution layer with bounded action authority</li>
+      <li>Observation layer for outcome capture</li>
+      <li>Adaptation loop for replanning and retry logic</li>
+      <li>Completion evaluator</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Control Loop</h2>
+<pre class="ascii-diagram">+----------------------+        
+|   High-Level Goal    |
++----------+-----------+
+           |
+           v
++----------------------+
+|     Planning Layer   |
++----------+-----------+
+           |
+           v
++----------------------+
+|    Execution Layer   |
++----------+-----------+
+           |
+           v
++----------------------+
+|   Feedback Monitor   |
++----------+-----------+
+           |
+           v
++----------------------+
+|   Adaptive Revision  |
++----------+-----------+
+           |
+           +----&gt; loop until completion
+</pre>
+  </section>
+
+  <section>
+    <h2>Architectural Principle</h2>
+    <p>Closed-loop continuity is the defining architectural property. A system that plans but cannot adapt, or executes but cannot determine completion, remains below the threshold.</p>
+  </section>
+
+  <section>
+    <h2>Execution Boundaries</h2>
+    <p>Agentic Complete does not require unlimited scope. Systems may remain bounded by domain, permissions, environment, or policy while still meeting the classification if continuity is preserved within those bounds.</p>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

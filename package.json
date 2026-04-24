@@ -1,0 +1,15 @@
+{
+  "name": "agenticcomplete",
+  "version": "1.0.0",
+  "description": "Agentic Complete authority site",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}

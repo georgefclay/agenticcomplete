@@ -1,0 +1,211 @@
+:root {
+  --text: #111111;
+  --muted: #555555;
+  --border: #d9d9d9;
+  --background: #ffffff;
+  --link: #111111;
+  --max-width: 860px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--text);
+  background: var(--background);
+  line-height: 1.65;
+}
+
+.wrapper {
+  width: min(100% - 2rem, var(--max-width));
+  margin: 0 auto;
+}
+
+.site-header {
+  padding: 2rem 0 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-title {
+  display: inline-block;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.site-subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.site-nav {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.2rem;
+}
+
+.site-nav a {
+  color: var(--link);
+  text-decoration: none;
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid transparent;
+}
+
+.site-nav a.active,
+.site-nav a:hover {
+  border-color: var(--text);
+}
+
+.document-page {
+  padding: 2rem 0 4rem;
+}
+
+.narrow-page {
+  max-width: 700px;
+}
+
+.hero {
+  padding-top: 0.25rem;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.3rem;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin: 2.4rem 0 0.85rem;
+}
+
+p,
+ul,
+ol,
+pre {
+  margin: 0 0 1rem;
+}
+
+.lead {
+  font-size: 1.12rem;
+  color: var(--text);
+  max-width: 52rem;
+}
+
+ul,
+ol {
+  padding-left: 1.4rem;
+}
+
+li + li {
+  margin-top: 0.35rem;
+}
+
+a {
+  color: var(--link);
+}
+
+.link-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.link-list li {
+  margin-bottom: 0.5rem;
+}
+
+.ascii-diagram {
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  font-family: "Courier New", monospace;
+  line-height: 1.35;
+}
+
+.checklist p {
+  margin-bottom: 0.75rem;
+}
+
+.contact-form {
+  margin-top: 1.5rem;
+}
+
+.contact-form label {
+  display: block;
+  margin: 1rem 0 0.35rem;
+  font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  font: inherit;
+  color: var(--text);
+  background: #fff;
+}
+
+.contact-form button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.2rem;
+  border: 1px solid var(--text);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background: #f5f5f5;
+}
+
+.form-note {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0 3rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.site-footer p {
+  margin: 0.2rem 0;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  .site-nav {
+    gap: 0.65rem 1rem;
+  }
+}

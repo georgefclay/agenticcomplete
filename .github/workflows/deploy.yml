@@ -1,0 +1,56 @@
+# Automated deploy workflow — replaces the manual FileZilla step.
+#
+# On every push to `main`, this action uploads the site files to the web host
+# via SFTP or FTPS. The system (or George) commits and pushes to GitHub;
+# GitHub Actions takes it from there.
+#
+# SETUP (one-time):
+#   1. In GitHub repo → Settings → Secrets and variables → Actions, add:
+#      - FTP_SERVER     (hostname, e.g. ftp.example.com)
+#      - FTP_USERNAME   (FileZilla login)
+#      - FTP_PASSWORD   (FileZilla password) — or use a deploy key / SSH key
+#      - FTP_SERVER_DIR (remote path where files should go, e.g. /public_html/)
+#   2. Confirm the `local-dir` and `server-dir` values below match your setup.
+#   3. Remove this comment block once working.
+#
+# DEPLOY EXCLUSIONS:
+#   The `exclude` list below keeps operational files and secrets off the web host.
+#   Only the live site files are uploaded.
+
+name: Deploy to web host
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/ops/**
+            **/.env*
+            **/*.md
+            **/*.log
+            **/.DS_Store
+            **/Thumbs.db
+          # Note: *.md is excluded because the site likely uses Express/templating
+          # and reads content from content/ or views/, not root-level markdown.
+          # If the site actually serves markdown files from the repo root, remove
+          # that line from exclude.
