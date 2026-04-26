@@ -1,6 +1,6 @@
 # STATE.md — Operating environment of the Agentic Complete system
 
-**Last updated:** 2026-04-26 (email send capability deferred; TRUSTED.md added)
+**Last updated:** 2026-04-26 (Mailchimp replaces Beehiiv; Plausible + Mailchimp APIs wired)
 **Maintained by:** the autonomous system, with George's edits as needed
 
 This file captures the live operational state of agenticcomplete.com and the
@@ -24,7 +24,7 @@ upgraded, or fails. Stale state here causes silent failures elsewhere.
 | Deploy pipeline | Live | Host-side pull script pulls from GitHub `master` every 15 minutes; PM2 restarts on change. Sandbox pushes use `GIT_SSH_COMMAND="ssh -i /Users/george/.ssh/id_ed25519 -o StrictHostKeyChecking=no" git push` to bypass keychain. Verified working 2026-04-25. |
 | GitHub repo | Live | Canonical source. Public. The system commits and pushes from the local clone on the Mini. |
 | Google Workspace (`editor@agenticcomplete.com`) | Active | Business Starter plan, $7/mo. The system's email identity. |
-| Beehiiv | Active | Account created, free tier. Sender = `editor@agenticcomplete.com`. No posts published yet. |
+| Mailchimp | Active | Free tier. Audience ID: `476c3f8e02`. API key in `ops/.mailchimp-token`. Replaced Beehiiv (no API on free tier). |
 | Plausible Analytics | Active | Growth plan, $9/mo. Tracking script live in `views/partials/head.ejs`. Dashboard: `plausible.io/agenticcomplete.com`. Public stats setting: TBD (George to decide). |
 | Google Search Console | Active | Domain property verified via DNS TXT. Sitemap (`/sitemap.xml`) submitted. `editor@` added as Full user; `georgefclay@gmail.com` retains Owner. |
 | LinkedIn Company Page | Deferred | Creation cooldown (7 days) triggered 2026-04-24. Target retry: on or after 2026-05-01. Do not attempt before then. |

@@ -26,6 +26,9 @@ ops/alerts/
 ops/reports/
 ops/source-material/
 ops/.github-token
+ops/.plausible-token
+ops/.beehiiv-token
+ops/.mailchimp-token
 tools/client_secret.json
 tools/token.json
 
