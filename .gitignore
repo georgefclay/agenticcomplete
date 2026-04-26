@@ -25,6 +25,7 @@ Thumbs.db
 ops/alerts/
 ops/reports/
 ops/source-material/
+ops/.github-token
 
 # ---- Local build artifacts ----
 dist/
