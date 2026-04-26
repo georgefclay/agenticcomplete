@@ -1,0 +1,25 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main class="wrapper document-page">
+  <h1>Blog</h1>
+  <p class="lead">Analysis, classifications, and field notes on autonomous systems.</p>
+
+  <% if (posts.length === 0) { %>
+    <p>No posts yet. The first post is coming soon.</p>
+  <% } else { %>
+    <ul class="post-list">
+      <% posts.forEach(function(post) { %>
+        <li class="post-list-item">
+          <span class="post-meta"><%= post.date %><% if (post.type === 'anchor') { %> &middot; In-depth<% } %></span>
+          <h2><a href="/blog/<%= post.slug %>"><%= post.title %></a></h2>
+          <% if (post.excerpt) { %>
+            <p><%= post.excerpt %></p>
+          <% } %>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

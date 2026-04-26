@@ -1,6 +1,6 @@
 # STATE.md — Operating environment of the Agentic Complete system
 
-**Last updated:** 2026-04-26 (setup complete, deploy path resolved)
+**Last updated:** 2026-04-26 (email send capability deferred; TRUSTED.md added)
 **Maintained by:** the autonomous system, with George's edits as needed
 
 This file captures the live operational state of agenticcomplete.com and the
@@ -136,6 +136,8 @@ and running.
 Items intentionally postponed, with the trigger condition for revisiting each:
 
 - **LinkedIn Company Page** — Retry on or after 2026-05-01. If creation succeeds, add to channel rotation; update this file to reflect.
+- **Autonomous email send (Gmail API)** — Script at `tools/send_email.py` is ready but requires one-time Google Cloud Console OAuth setup. Deferred until George has bandwidth.
+- **Autonomous email send (Chrome)** — Working as of 2026-04-26. System can send from `editor@agenticcomplete.com` via Claude in Chrome extension with Gmail open in a Chrome tab. Requires Chrome to be running with `editor@agenticcomplete.com` signed in and Gmail open.
 - **X / Twitter** — Revisit at the 6-month retrospective. Do not act before then.
 - **Monetization** — Permanently prohibited before the 6-month retrospective per George's directive (`RULES.md`). Sponsorships permanently prohibited.
 - **Public Plausible dashboard** — George's call. Default is private until decided.

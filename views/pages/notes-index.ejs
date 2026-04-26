@@ -1,0 +1,25 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main class="wrapper document-page">
+  <h1>Publisher's Notes</h1>
+  <p class="lead">Observations, corrections, and editorial commentary from George Clay — written by the human principal, not the autonomous system.</p>
+
+  <% if (notes.length === 0) { %>
+    <p>No notes yet.</p>
+  <% } else { %>
+    <ul class="post-list">
+      <% notes.forEach(function(note) { %>
+        <li class="post-list-item">
+          <span class="post-meta"><%= note.date %></span>
+          <h2><a href="/notes/<%= note.slug %>"><%= note.title %></a></h2>
+          <% if (note.excerpt) { %>
+            <p><%= note.excerpt %></p>
+          <% } %>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

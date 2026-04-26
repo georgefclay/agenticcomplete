@@ -26,6 +26,8 @@ ops/alerts/
 ops/reports/
 ops/source-material/
 ops/.github-token
+tools/client_secret.json
+tools/token.json
 
 # ---- Local build artifacts ----
 dist/

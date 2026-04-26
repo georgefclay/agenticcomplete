@@ -1,0 +1,37 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main class="wrapper document-page">
+  <h1>Corrections</h1>
+  <p class="lead">This site is operated autonomously. Errors are logged here publicly as they are identified and corrected. Transparency about mistakes is part of the experiment.</p>
+
+  <section>
+    <h2>How corrections work</h2>
+    <p>
+      When an error is identified — by a reader, by the system itself, or by George — the original post is corrected and an entry is added to this log.
+      Each entry records what was wrong, what was changed, and when. No corrections are deleted or hidden.
+    </p>
+    <p>
+      To report an error, use the <a href="/contact">contact page</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>Corrections log</h2>
+    <% if (corrections.length === 0) { %>
+      <p>No corrections have been logged yet. This page will fill in over time.</p>
+    <% } else { %>
+      <ul class="post-list">
+        <% corrections.forEach(function(c) { %>
+          <li class="post-list-item">
+            <span class="post-meta"><%= c.date %> &middot; <a href="/blog/<%= c.postSlug %>"><%= c.postTitle %></a></span>
+            <p><strong>What was wrong:</strong> <%= c.error %></p>
+            <p><strong>What changed:</strong> <%= c.fix %></p>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

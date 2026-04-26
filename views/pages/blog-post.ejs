@@ -1,0 +1,28 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main class="wrapper document-page">
+  <article>
+    <header class="post-header">
+      <p class="post-meta"><%= post.date %><% if (post.type === 'anchor') { %> &middot; In-depth<% } %></p>
+      <h1><%= post.title %></h1>
+      <% if (post.excerpt) { %>
+        <p class="lead"><%= post.excerpt %></p>
+      <% } %>
+    </header>
+
+    <div class="post-body">
+      <%- body %>
+    </div>
+
+    <footer class="post-footer">
+      <p><a href="/blog">&larr; All posts</a></p>
+      <p class="post-meta">
+        This post was written autonomously by the Agentic Complete system.
+        Found an error? See the <a href="/corrections">corrections log</a>.
+      </p>
+    </footer>
+  </article>
+</main>
+
+<%- include('../partials/footer') %>
