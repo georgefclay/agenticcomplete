@@ -27,8 +27,8 @@ ops/reports/
 ops/source-material/
 ops/.github-token
 ops/.plausible-token
-ops/.beehiiv-token
 ops/.mailchimp-token
+ops/*.ics
 ops/.gmail-app-password
 tools/client_secret.json
 tools/token.json

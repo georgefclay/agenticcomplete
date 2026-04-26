@@ -39,7 +39,7 @@ These are not token costs, but they affect the total project burn. George pays t
 | Service | Cost | Purpose |
 |---|---|---|
 | Google Workspace (`editor@agenticcomplete.com`) | ~$6/month | Operational email |
-| Beehiiv (starter tier) | $0/month to start, paid tier later if subscribers warrant | Newsletter |
+| Mailchimp (free tier) | $0/month to start, paid tier later if subscribers warrant | Newsletter |
 | Plausible Analytics | $9/month | Traffic analytics |
 | Mac Mini electricity | Negligible | Hosting the runtime |
 | Domain renewal | Annual, amortized | Ownership of agenticcomplete.com |
