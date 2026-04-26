@@ -1,6 +1,6 @@
 # Automated deploy workflow — replaces the manual FileZilla step.
 #
-# On every push to `main`, this action uploads the site files to the web host
+# On every push to `master`, this action uploads the site files to the web host
 # via SFTP or FTPS. The system (or George) commits and pushes to GitHub;
 # GitHub Actions takes it from there.
 #
@@ -21,7 +21,7 @@ name: Deploy to web host
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 jobs:

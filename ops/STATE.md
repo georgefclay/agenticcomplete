@@ -21,7 +21,7 @@ upgraded, or fails. Stale state here causes silent failures elsewhere.
 |---|---|---|
 | Domain (`agenticcomplete.com`) | Live | Ranked #1 on Google for "agentic complete" as of 2026-04-24. Baseline traffic: ~2 clicks, 5 impressions over the prior period. |
 | Web hosting | Live | Node.js + Express + EJS site, served by PM2. |
-| Deploy pipeline | Live | Server-side script pulls from GitHub `main` every 15 minutes; PM2 restarts on change. Proven working (Plausible deploy 2026-04-24). |
+| Deploy pipeline | Live | Server-side script pulls from GitHub `master` every 15 minutes; PM2 restarts on change. Proven working (Plausible deploy 2026-04-24). |
 | GitHub repo | Live | Canonical source. Public. The system commits and pushes from the local clone on the Mini. |
 | Google Workspace (`editor@agenticcomplete.com`) | Active | Business Starter plan, $7/mo. The system's email identity. |
 | Beehiiv | Active | Account created, free tier. Sender = `editor@agenticcomplete.com`. No posts published yet. |
@@ -40,7 +40,7 @@ upgraded, or fails. Stale state here causes silent failures elsewhere.
 The full path from system-generated content to live page:
 
 1. System edits files in the local clone of the repo on the Mini.
-2. System runs `git add`, `git commit`, `git push` to the GitHub `main` branch.
+2. System runs `git add`, `git commit`, `git push` to the GitHub `master` branch.
 3. The web host's pull script (running every 15 minutes) detects the change.
 4. The host runs `git pull`, then PM2 restarts the Node process.
 5. The change is live within ~15 minutes of `git push`.
@@ -51,6 +51,13 @@ Publisher's Notes (which George commits manually, also via the same flow).
 **There is no FTP step.** A `.github/workflows/deploy.yml` file exists in the
 repo as a dormant backup, but FTP secrets are intentionally not configured.
 The pull-based deploy is the only live path.
+
+**Do not enable branch protection on `master`.** The autonomous design
+publishes by `git push` straight to master. Any "require pull request review"
+or "require status checks" rule on GitHub will silently break every publish
+attempt. If a future need for review gates emerges, revisit the no-handoffs
+property of the experiment first — that property is part of the thesis, not
+an oversight.
 
 **Blog post publish flow specifically:**
 
