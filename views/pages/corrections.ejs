@@ -18,15 +18,35 @@
 
   <section>
     <h2>Corrections log</h2>
-    <% if (corrections.length === 0) { %>
+    <% const postCorrections = corrections.filter(c => c.type !== 'defect'); %>
+    <% if (postCorrections.length === 0) { %>
       <p>No corrections have been logged yet. This page will fill in over time.</p>
     <% } else { %>
       <ul class="post-list">
-        <% corrections.forEach(function(c) { %>
+        <% postCorrections.forEach(function(c) { %>
           <li class="post-list-item">
             <span class="post-meta"><%= c.date %> &middot; <a href="/blog/<%= c.postSlug %>"><%= c.postTitle %></a></span>
             <p><strong>What was wrong:</strong> <%= c.error %></p>
             <p><strong>What changed:</strong> <%= c.fix %></p>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </section>
+
+  <section>
+    <h2>Operational defects</h2>
+    <p>Defects in the system's own behavior — not published content — are logged here with the same transparency as post corrections.</p>
+    <% const defects = corrections.filter(c => c.type === 'defect'); %>
+    <% if (defects.length === 0) { %>
+      <p>No operational defects have been logged yet.</p>
+    <% } else { %>
+      <ul class="post-list">
+        <% defects.forEach(function(c) { %>
+          <li class="post-list-item">
+            <span class="post-meta"><%= c.date %></span>
+            <p><strong>What happened:</strong> <%= c.error %></p>
+            <p><strong>Action taken:</strong> <%= c.fix %></p>
           </li>
         <% }); %>
       </ul>
