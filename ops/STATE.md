@@ -1,6 +1,6 @@
 # STATE.md — Operating environment of the Agentic Complete system
 
-**Last updated:** 2026-04-26 (Mailchimp replaces Beehiiv; Plausible + Mailchimp APIs wired)
+**Last updated:** 2026-05-01 (monthly update: blog live, 2 posts published, deploy git-lock issue recurring, LinkedIn retry date arrived)
 **Maintained by:** the autonomous system, with George's edits as needed
 
 This file captures the live operational state of agenticcomplete.com and the
@@ -19,15 +19,15 @@ upgraded, or fails. Stale state here causes silent failures elsewhere.
 
 | Platform | Status | Notes |
 |---|---|---|
-| Domain (`agenticcomplete.com`) | Live | Ranked #1 on Google for "agentic complete" as of 2026-04-24. Baseline traffic: ~2 clicks, 5 impressions over the prior period. |
-| Web hosting | Live | Node.js + Express + EJS site, served by PM2. |
-| Deploy pipeline | Live | Host-side pull script pulls from GitHub `master` every 15 minutes; PM2 restarts on change. Sandbox pushes use `GIT_SSH_COMMAND="ssh -i /Users/george/.ssh/id_ed25519 -o StrictHostKeyChecking=no" git push` to bypass keychain. Verified working 2026-04-25. |
+| Domain (`agenticcomplete.com`) | Live | Ranked #1 on Google for "agentic complete" as of 2026-04-24. 5 unique visitors / 31 pageviews in first 30 days (all direct). |
+| Web hosting | Live | Node.js + Express + EJS site, served by PM2. Blog, notes, corrections, how-this-site-works, RSS feed all live as of 2026-04-26. |
+| Deploy pipeline | Degraded | Host-side pull script pulls from GitHub `master` every 15 minutes; PM2 restarts on change. Sandbox pushes via HTTPS + PAT (`ops/.github-token`). Recurring stale `.git/index.lock` / `.git/HEAD.lock` files on Mac Mini cause intermittent failures (2026-04-30 and 2026-05-01). George must remove lock files manually: `rm .git/index.lock .git/HEAD.lock`. Alert filed at `ops/alerts/2026-05-01-deploy-git-lock.md`. |
 | GitHub repo | Live | Canonical source. Public. The system commits and pushes from the local clone on the Mini. |
 | Google Workspace (`editor@agenticcomplete.com`) | Active | Business Starter plan, $7/mo. The system's email identity. |
 | Mailchimp | Active | Free tier. Audience ID: `476c3f8e02`. API key in `ops/.mailchimp-token`. Replaced Beehiiv (no API on free tier). |
 | Plausible Analytics | Active | Growth plan, $9/mo. Tracking script live in `views/partials/head.ejs`. Dashboard: `plausible.io/agenticcomplete.com`. Public stats setting: TBD (George to decide). |
 | Google Search Console | Active | Domain property verified via DNS TXT. Sitemap (`/sitemap.xml`) submitted. `editor@` added as Full user; `georgefclay@gmail.com` retains Owner. |
-| LinkedIn Company Page | Deferred | Creation cooldown (7 days) triggered 2026-04-24. Target retry: on or after 2026-05-01. Do not attempt before then. |
+| LinkedIn Company Page | Pending retry | Creation cooldown (7 days) triggered 2026-04-24. Retry date: 2026-05-01 (today). Attempt not yet made in this session. |
 | X / Twitter | Skipped | Decision deferred to the 6-month retrospective. Do not engage. |
 | Reddit | Not used | No automated posting. Manual links only if relevant, posted by George. |
 
@@ -120,14 +120,24 @@ and running.
 - Power settings: sleep=0, autorestart=1, Cowork is a Login Item.
 - Git identity: `user.name = "Agentic Complete System"`, `user.email = "editor@agenticcomplete.com"`.
 
+**Resolved since 2026-04-26:**
+
+- Blog scaffolding complete (`face841`) — /blog, /blog/:slug, /notes, /corrections,
+  /how-this-site-works, RSS feed, dynamic sitemap, og:image all live.
+- Two posts published: anchor (2026-04-28) and applied (2026-05-01).
+- Plausible API access confirmed working (Bearer token in `ops/.plausible-token`).
+- Mailchimp API confirmed working; 2 campaigns sent.
+- TRUSTED.md created.
+
 **Still pending:**
 
-- Blog scaffolding (P0 in `BACKLOG.md`) — required before first post.
-- Email check: Chrome must be open for browser-based inbox access. Consider
-  a Gmail MCP connector for sandbox-safe email checking.
-- LinkedIn Company Page (see Deferred section below).
-- `og:image` meta tag.
-- Plausible and Search Console API access for automated reports.
+- Email check: Chrome must be open for browser-based inbox access. 13/13 April
+  email check runs failed due to Chrome extension unavailability. Consider Gmail
+  API access (OAuth setup deferred per `ops/SETUP.md`).
+- LinkedIn Company Page — retry date 2026-05-01 (today). Not yet attempted.
+- Search Console API access — data remains a blind spot in automated reports.
+- Stale git lock files (`.git/index.lock`, `.git/HEAD.lock`) on Mac Mini require
+  George's manual removal before deploy pipeline is fully reliable.
 
 ---
 
@@ -135,15 +145,17 @@ and running.
 
 Items intentionally postponed, with the trigger condition for revisiting each:
 
-- **LinkedIn Company Page** — Retry on or after 2026-05-01. If creation succeeds, add to channel rotation; update this file to reflect.
+- **LinkedIn Company Page** — Retry date: 2026-05-01. Not yet attempted this session. If creation succeeds, add to channel rotation; update this file to reflect.
 - **Autonomous email send (Gmail API)** — Script at `tools/send_email.py` is ready but requires one-time Google Cloud Console OAuth setup. Deferred until George has bandwidth.
-- **Autonomous email send (Chrome)** — Working as of 2026-04-26. System can send from `editor@agenticcomplete.com` via Claude in Chrome extension with Gmail open in a Chrome tab. Requires Chrome to be running with `editor@agenticcomplete.com` signed in and Gmail open.
+- **Autonomous email send (Chrome)** — Working as of 2026-04-26 when Chrome is open. Requires Chrome running with `editor@agenticcomplete.com` signed in and Gmail open. Email check runs have been failing because Chrome is not reliably open.
 - **X / Twitter** — Revisit at the 6-month retrospective. Do not act before then.
 - **Monetization** — Permanently prohibited before the 6-month retrospective per George's directive (`RULES.md`). Sponsorships permanently prohibited.
 - **Public Plausible dashboard** — George's call. Default is private until decided.
-- **Open Graph image** — Site lacks `og:image` meta tag. Affects link previews on LinkedIn / Slack / iMessage. Add when a 1200×630 image is available.
-- **Blog scaffolding** — The site does not yet have blog routes. Adding `/blog` index, `/blog/:slug` post pages, and an RSS feed is a P0 item in `BACKLOG.md`.
-- **`/notes/` and `/corrections` routes** — Required by `PUBLISHERS_NOTES.md` and `CORRECTIONS.md`. Build alongside the blog scaffolding.
+- ~~**Open Graph image**~~ — RESOLVED. `og:image` is live (`AC1200x630.png`, set in head.ejs via face841).
+- ~~**Blog scaffolding**~~ — RESOLVED. All routes live as of 2026-04-26 (face841).
+- ~~**`/notes/` and `/corrections` routes**~~ — RESOLVED. Live as of 2026-04-26 (face841).
+- **Search Console API access** — Required for automated search performance data. Not yet configured. Manual dashboard login remains the only access path.
+- **Git lock file cleanup** — Stale lock files accumulate when sandbox sessions are interrupted. Cannot be removed from sandbox (permission denied on FUSE mount). George must remove manually from macOS Terminal as needed.
 
 ---
 
