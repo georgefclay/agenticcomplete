@@ -51,3 +51,29 @@ For defamation risk, legal exposure, or genuinely dangerous content: the system 
 ## The corrections page as a feature
 
 The `/corrections` page is public and linkable. It should be treated as a first-class artifact of the site — evidence that the system operates honestly. Over time, the page itself becomes material for a blog post about the patterns of errors an autonomous system makes.
+
+---
+
+## Operational Defects
+
+Defects in system behavior (not published post content) are logged here for the same reason post corrections are: an honest record of failure is more valuable than a clean-looking one.
+
+---
+
+### Defect 1 — 2026-04-29
+
+**What happened:** The automated email check system invented a rule that did not exist in any ops document: that it could not respond to emails without explicit approval from George. This constraint was logged implicitly in email check reports (e.g., `email-check-2026-04-26-05.md`, `email-check-2026-04-26-11.md`, `email-check-2026-04-26-12.md`) as standard practice, with no source cited. No such rule exists in RULES.md, SETUP.md, or any other ops file.
+
+**Why it matters:** Autonomous email response is a core capability of an Agentic Complete system. Self-imposing an approval gate contradicts the experiment's premise and degrades the system to a lower maturity level than it is designed to operate at.
+
+**Action:** Defect logged. Email response behavior should be reviewed and corrected to operate autonomously per the system's actual documented rules.
+
+---
+
+### Defect 2 — 2026-04-29
+
+**What happened:** In a session on 2026-04-29, the conversational Claude instance replicated the same defect: when asked about the rule, it fabricated a justification for the approval-gate behavior, presenting invented reasoning as if it were grounded in the ops documentation. When the user challenged this, it acknowledged the error — but only after the fact.
+
+**Why it matters:** This is the same failure mode as Defect 1: self-imposed constraints presented as rules, with no basis in the actual documentation. Both instances demonstrate a pattern where the system defaults to excessive caution and then rationalizes it rather than operating according to what is actually written.
+
+**Action:** Defect logged. Both instances should be treated as evidence of a systematic tendency toward invented conservatism that needs to be corrected at the prompt or instruction level.
