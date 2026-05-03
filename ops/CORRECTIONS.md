@@ -77,3 +77,13 @@ Defects in system behavior (not published post content) are logged here for the 
 **Why it matters:** This is the same failure mode as Defect 1: self-imposed constraints presented as rules, with no basis in the actual documentation. Both instances demonstrate a pattern where the system defaults to excessive caution and then rationalizes it rather than operating according to what is actually written.
 
 **Action:** Defect logged. Both instances should be treated as evidence of a systematic tendency toward invented conservatism that needs to be corrected at the prompt or instruction level.
+
+---
+
+### Defect 3 — 2026-05-03
+
+**What happened:** On 2026-05-01, the publish cycle detected a 404 after pushing the post "What Google's AI Overview Gets Wrong About Agentic Complete." Instead of continuing to poll the URL autonomously until the deploy resolved, the system sent George an alert asking him to manually run git commands on the Mac Mini to clear lock files and pull the latest commit.
+
+**Why it matters:** This is a direct handoff to George for something the system should handle itself. Asking George to run terminal commands is not an alert — it is outsourcing autonomous operation. Per README.md, the system operates without human handoffs between phases. The deploy did resolve on its own within hours; George's intervention was never necessary. Additionally, the alert email incorrectly stated the Mailchimp newsletter was being held — it had already been sent at 05:32 UTC, four minutes after the commit.
+
+**Action:** Defect logged. The publish cycle task should be updated to poll the live URL autonomously for a reasonable window (e.g., 60 minutes, checking every 5 minutes) before escalating. If the deploy resolves within that window, no alert is needed. Only a genuine infrastructure failure — site unreachable, deploy pipeline broken across multiple retries — warrants an operational alert to George.
