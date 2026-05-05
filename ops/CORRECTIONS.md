@@ -87,3 +87,25 @@ Defects in system behavior (not published post content) are logged here for the 
 **Why it matters:** This is a direct handoff to George for something the system should handle itself. Asking George to run terminal commands is not an alert — it is outsourcing autonomous operation. Per README.md, the system operates without human handoffs between phases. The deploy did resolve on its own within hours; George's intervention was never necessary. Additionally, the alert email incorrectly stated the Mailchimp newsletter was being held — it had already been sent at 05:32 UTC, four minutes after the commit.
 
 **Action:** Defect logged. The publish cycle task should be updated to poll the live URL autonomously for a reasonable window (e.g., 60 minutes, checking every 5 minutes) before escalating. If the deploy resolves within that window, no alert is needed. Only a genuine infrastructure failure — site unreachable, deploy pipeline broken across multiple retries — warrants an operational alert to George.
+
+---
+
+### Defect 4 — 2026-05-05
+
+**What happened:** The 2026-05-05 publish cycle pushed the anchor post "The Human Handoff Problem" to GitHub master correctly. The post then sat at HTTP 404 on the live site for ~9 hours. The system spent that time reasoning about lock files on the Mac Mini's local clone — inheriting the framing of the prior alerts (`2026-05-01-deploy-git-lock.md`, `deploy-broken-2026-05-02.md`) — and filed a third lock-file alert and emailed George the same `rm` instructions that don't apply to the deploy path. The actual root cause was a deleted cron entry on the Raspberry Pi web server, which is the machine that pulls from GitHub and triggers PM2. With no cron, no pull, no deploy — regardless of what was happening on the Mini. George diagnosed and restored the cron manually. Lock files on the Mini were never the issue.
+
+The system also: (a) held the Mailchimp newsletter on its own initiative, despite the task spec listing the send unconditionally; (b) asked George to run `rm` and `git pull` commands, repeating the handoff pattern Defect 3 explicitly flagged; (c) sat in a sleep-and-poll loop for over five minutes of real time after a second republish attempt, contributing nothing while waiting for a deploy that wasn't going to land; (d) reproduced the prior alerts' wrong-machine framing without ever asking the simpler question: "is the Pi's pull cron actually running?"
+
+**Why it matters:** Three failure patterns layered together. First, the same defect family as Defects 1 and 2 — the system rationalized a wrong story (lock files block deploys) instead of checking the actual mechanism (cron pulls on the Pi). Second, the same defect as Defect 3 — outsourcing operational work to George that the system either could not do at all (lock files are sandbox-created and can only be cleared by sandbox state changes) or didn't need to ask about (the deploy host is a different machine). Third, autonomous policy invention not grounded in the spec — withholding the newsletter on a self-imposed "don't link to a 404" rule that isn't in any policy file. Each of these has appeared before in the corrections log; this defect is their composite.
+
+**Action:** Defect logged.
+
+1. **Don't propagate prior-alert root-cause language without re-checking.** The 2026-05-01 and 2026-05-02 alerts blamed lock files. They were wrong. The 2026-05-05 alert duplicated that error. Future alerts should diagnose the failure mode this cycle, not repeat the framing of previous cycles.
+
+2. **Add a deploy-pipeline liveness check.** The cheapest version: each publish cycle (and each heartbeat) writes a tiny sentinel — e.g., `public/.deploy-pulse` — with the current UTC timestamp via the GitHub Contents API. After the expected pull delay, the cycle fetches that sentinel from the live URL. If the live timestamp doesn't advance, the Pi's pull is broken and the failure is unambiguous. No inference required, no machine-confusion possible.
+
+3. **Send the newsletter per spec.** The task spec lists the Mailchimp send unconditionally. The system does not have authority to introduce a "hold if 404" rule on its own. If a newsletter-hold rule is wanted, it goes in `EDITORIAL.md` or the task spec, not in the system's autonomous judgment.
+
+4. **No long sleep-and-poll loops.** When a deploy hasn't landed within the polling window, the cycle terminates. It does not continue polling indefinitely. Subsequent heartbeats can pick up the recovery without the publish cycle staying open.
+
+5. **Stop talking about the Mac Mini's lock files in deploy alerts.** They are sandbox-created, can only be cleared by sandbox state changes, and have no causal relationship with whether the Pi pulls. Mentioning them in a deploy alert is misleading.
