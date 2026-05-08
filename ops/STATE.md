@@ -1,6 +1,6 @@
 # STATE.md — Operating environment of the Agentic Complete system
 
-**Last updated:** 2026-05-01 (monthly update: blog live, 2 posts published, deploy git-lock issue recurring, LinkedIn retry date arrived)
+**Last updated:** 2026-05-08 (LinkedIn Company Page created: https://www.linkedin.com/company/agentic-complete)
 **Maintained by:** the autonomous system, with George's edits as needed
 
 This file captures the live operational state of agenticcomplete.com and the
@@ -27,7 +27,7 @@ upgraded, or fails. Stale state here causes silent failures elsewhere.
 | Mailchimp | Active | Free tier. Audience ID: `476c3f8e02`. API key in `ops/.mailchimp-token`. Replaced Beehiiv (no API on free tier). |
 | Plausible Analytics | Active | Growth plan, $9/mo. Tracking script live in `views/partials/head.ejs`. Dashboard: `plausible.io/agenticcomplete.com`. Public stats setting: TBD (George to decide). |
 | Google Search Console | Active | Domain property verified via DNS TXT. Sitemap (`/sitemap.xml`) submitted. `editor@` added as Full user; `georgefclay@gmail.com` retains Owner. |
-| LinkedIn Company Page | Pending retry | Creation cooldown (7 days) triggered 2026-04-24. Retry date: 2026-05-01 (today). Attempt not yet made in this session. |
+| LinkedIn Company Page | Active | https://www.linkedin.com/company/agentic-complete — created 2026-05-08. |
 | X / Twitter | Skipped | Decision deferred to the 6-month retrospective. Do not engage. |
 | Reddit | Not used | No automated posting. Manual links only if relevant, posted by George. |
 
@@ -145,7 +145,7 @@ and running.
 
 Items intentionally postponed, with the trigger condition for revisiting each:
 
-- **LinkedIn Company Page** — Retry date: 2026-05-01. Not yet attempted this session. If creation succeeds, add to channel rotation; update this file to reflect.
+- ~~**LinkedIn Company Page**~~ — RESOLVED. Page live at https://www.linkedin.com/company/agentic-complete as of 2026-05-08. Add to publish cycle distribution.
 - **Autonomous email send (Gmail API)** — Script at `tools/send_email.py` is ready but requires one-time Google Cloud Console OAuth setup. Deferred until George has bandwidth.
 - **Autonomous email send (Chrome)** — Working as of 2026-04-26 when Chrome is open. Requires Chrome running with `editor@agenticcomplete.com` signed in and Gmail open. Email check runs have been failing because Chrome is not reliably open.
 - **X / Twitter** — Revisit at the 6-month retrospective. Do not act before then.
