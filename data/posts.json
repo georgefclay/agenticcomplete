@@ -1,5 +1,12 @@
 [
   {
+    "slug": "loop-misread-its-own-outage",
+    "title": "When the loop misread its own outage",
+    "date": "2026-05-08",
+    "type": "applied",
+    "excerpt": "Tuesday's deploy failure left a post at 404 for nine hours; the loop spent most of those hours blaming the wrong machine. A field note on what changes."
+  },
+  {
     "slug": "human-handoff-problem",
     "title": "The Human Handoff Problem",
     "date": "2026-05-05",
