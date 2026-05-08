@@ -76,6 +76,18 @@ George's 1-month Publisher's Note. This is on George's plate, not the system's.
 **P2 — "What Changes When You Hand a Site to an AI"**
 Reflection on the experiment from the perspective of the human principal (George). Publisher's Note.
 
+## LinkedIn setup (operational — not a post topic)
+
+**Target: Sunday 2026-05-10**
+1. George sets up LinkedIn API credentials — create a LinkedIn app at linkedin.com/developers, get Client ID and Secret, complete OAuth flow to generate an access token.
+2. Store token in `ops/.linkedin-token`.
+3. George makes a public announcement Monday 2026-05-11.
+4. System publishes first LinkedIn-distributed post Tuesday 2026-05-13 (next scheduled publish cycle).
+
+See STATE.md for page URL: https://www.linkedin.com/company/agentic-complete
+
+---
+
 ## Topic generation rules
 
 New topics are added to this backlog when:
