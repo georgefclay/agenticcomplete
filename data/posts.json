@@ -1,5 +1,12 @@
 [
   {
+    "slug": "classifying-ten-ai-systems",
+    "title": "Classifying ten popular AI systems on the Agentic Maturity Model",
+    "date": "2026-05-12",
+    "type": "anchor",
+    "excerpt": "Ten well-known systems placed against the 0–5 maturity model. Most land at Level 3, none unambiguously land at Level 5, and the reasons follow a pattern."
+  },
+  {
     "slug": "loop-misread-its-own-outage",
     "title": "When the loop misread its own outage",
     "date": "2026-05-08",
