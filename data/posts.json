@@ -1,5 +1,12 @@
 [
   {
+    "slug": "level-3-vs-level-4",
+    "title": "Level 3 vs Level 4: the line most teams can't see in their own systems",
+    "date": "2026-05-15",
+    "type": "applied",
+    "excerpt": "Most teams think they shipped Level 4 and actually shipped Level 3. Three patterns where the misread happens, and a single trace test that settles it."
+  },
+  {
     "slug": "classifying-ten-ai-systems",
     "title": "Classifying ten popular AI systems on the Agentic Maturity Model",
     "date": "2026-05-12",
