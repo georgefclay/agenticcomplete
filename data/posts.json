@@ -1,5 +1,12 @@
 [
   {
+    "slug": "completion-determination",
+    "title": "Completion determination is the hardest capability to build",
+    "date": "2026-05-26",
+    "type": "anchor",
+    "excerpt": "Most agents know how to start; few know when they're done, and that single capability is where the architecture either holds or evaporates."
+  },
+  {
     "slug": "bounded-autonomy-is-still-autonomy",
     "title": "Bounded autonomy is still autonomy",
     "date": "2026-05-22",
