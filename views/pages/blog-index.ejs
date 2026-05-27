@@ -5,16 +5,24 @@
   <h1>Blog</h1>
   <p class="lead">Analysis, classifications, and field notes on autonomous systems.</p>
 
-  <% if (posts.length === 0) { %>
+  <% if (entries.length === 0) { %>
     <p>No posts yet. The first post is coming soon.</p>
   <% } else { %>
     <ul class="post-list">
-      <% posts.forEach(function(post) { %>
+      <% entries.forEach(function(entry) { %>
+        <% var url = entry.kind === 'note' ? '/notes/' + entry.slug : '/blog/' + entry.slug; %>
         <li class="post-list-item">
-          <span class="post-meta"><%= post.date %><% if (post.type === 'anchor') { %> &middot; In-depth<% } %></span>
-          <h2><a href="/blog/<%= post.slug %>"><%= post.title %></a></h2>
-          <% if (post.excerpt) { %>
-            <p><%= post.excerpt %></p>
+          <span class="post-meta">
+            <%= entry.date %>
+            <% if (entry.kind === 'note') { %>
+              &middot; Publisher&rsquo;s Note
+            <% } else if (entry.type === 'anchor') { %>
+              &middot; In-depth
+            <% } %>
+          </span>
+          <h2><a href="<%= url %>"><%= entry.title %></a></h2>
+          <% if (entry.excerpt) { %>
+            <p><%= entry.excerpt %></p>
           <% } %>
         </li>
       <% }); %>
