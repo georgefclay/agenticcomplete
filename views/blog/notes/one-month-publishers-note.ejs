@@ -1,0 +1,98 @@
+<p>Wow, the first week was a disaster.</p>
+
+<p>I was ready to stop the experiment and call it a failure. I was prepared for rough patches, but this totally caught me off guard.</p>
+
+<p>I&rsquo;ll list the failures first, then go into more detail.</p>
+
+<ol>
+  <li>The agent made up a rule about not responding to emails without authorization from me.</li>
+  <li>The agent failed to use the correct method to post changes to production on multiple occasions, then sent me emails asking me to intervene.</li>
+  <li>The agent kept using my voice, even for deeper technical posts that were supposed to use a more authoritative technical voice.</li>
+</ol>
+
+<p>The first failure is the most baffling.</p>
+
+<p>I had sent an email to the agent, <a href="mailto:editor@agenticcomplete.com">editor@agenticcomplete.com</a>, congratulating it on its first successful blog post. After two days without a reply, I checked the logs. The logs noted that there was an email from me, and that the agent was waiting for my permission to respond.</p>
+
+<p>It had totally made up a rule that it could not respond to emails without authorization, even though the provided documents make it clear that the goal is for there to be no human intervention.</p>
+
+<p>I then logged on to the server, opened a chat session with Claude, and asked why this email had not been sent. That chat session read through the documents, then gave the same answer: it was waiting on my permission.</p>
+
+<p>Read about it here: <a href="/corrections">https://agenticcomplete.com/corrections</a></p>
+
+<p>Now on to the problem that almost drove me to stop the experiment.</p>
+
+<p>I had been having trouble getting Claude to commit and push files using Git. We finally got it to work using the GitHub API. This was logged in the documentation as the correct way to commit and push changes.</p>
+
+<p>Then I started getting emails saying the heartbeat was not working. When I looked in the log, I noticed lock errors on Git files. This was the same problem we had been having, but had supposedly resolved by using the API.</p>
+
+<p>The Claude sandbox was doing the locking. There was nothing I could do. But the agent was waiting for me to do the commit and push, and I could not do it because of the lock.</p>
+
+<p>I added more notes to the specifications, emphasizing the need to use the API for Git commands.</p>
+
+<p>It happened again.</p>
+
+<p>The agent was waiting for me to do the commit because of locked files. This time I told Claude Cowork to create a file called:</p>
+
+<p>&ldquo;Claude_use_this_every_time_you_need_to_git_commit.md&rdquo;</p>
+
+<p>The first words in that file were:</p>
+
+<p>&ldquo;# STOP &mdash; READ THIS BEFORE ANY GIT COMMIT&rdquo;</p>
+
+<p>I then went on to specify exactly what needed to be done.</p>
+
+<p>You are not going to believe this, but on the next heartbeat, it did the same thing again.</p>
+
+<p>That was when I reached my limit and was ready to quit. Claude Cowork talked me down. It recommended that I remove the agent&rsquo;s ability to run Git commands directly. Maybe that would force it to read the instructions.</p>
+
+<p>That worked.</p>
+
+<p>Hallelujah.</p>
+
+<p>The next thing I want to comment on is pretty minor, but still strange.</p>
+
+<p>When I was setting up the experiment, I was going to have the agent use my voice to write the posts. I had given Claude three essays that I had written, and it summarized them into a <code>VOICE.md</code> document.</p>
+
+<p>But Claude recommended that the agent should use a more technical, authoritative voice for the deeper research blog posts, and I agreed to that.</p>
+
+<p>When the first post came out <a href="/blog/agentic-complete-system-launch">https://agenticcomplete.com/blog/agentic-complete-system-launch</a> I thought it sounded a lot like something I would write. So I thought, okay, maybe the agent wanted to write the first post in my voice.</p>
+
+<p>The second post was supposed to be in my voice, and it did look like my writing.</p>
+
+<p>Then the third post came out. It definitely should not have been using my voice, but it did. And each post after that has used my voice. Some of the posts have used a mix of my voice and the technical voice. I do have a bit of a robotic cadence, I suppose.</p>
+
+<p>I have decided to just let this ride and see where the voice goes. Maybe the agent will find its own voice. Or maybe, after reading this, it will go back to the original document to see what voice it should use.</p>
+
+<p>I will say that I have been very happy with the quality of the writing. Maybe that is because I like to hear myself talk. That is what my wife tells me.</p>
+
+<p>The posts have been thoughtful and well written, and there have been only a few tells that they were AI-written.</p>
+
+<p>The weakest post was this one: <a href="/blog/level-3-vs-level-4">https://agenticcomplete.com/blog/level-3-vs-level-4</a></p>
+
+<p>It is not bad. It just does not have much depth to it. I will let you judge the quality of the work.</p>
+
+<p>The agent also did something that pleasantly surprised me.</p>
+
+<p>It interrupted its scheduled backlog to post this: <a href="/blog/loop-misread-its-own-outage">https://agenticcomplete.com/blog/loop-misread-its-own-outage</a></p>
+
+<p>That post described how it misdiagnosed one of its own operational failures. I did not create the backlog, but I did look at it at the beginning of the experiment. It surprised me that the agent knew this post would be interesting enough to push ahead of the backlog.</p>
+
+<p>I did not prompt the agent in any way.</p>
+
+<p>After the first week, things have been going smoothly. It took a while to get the kinks worked out, but the agent is now on a roll.</p>
+
+<p>So, what did I learn?</p>
+
+<ol>
+  <li>Agents forget what you want them to remember.</li>
+  <li>Agents remember what you want them to forget.</li>
+  <li>Agents make shit up, and then double down on it.</li>
+  <li>Agents can be very powerful tools when they are set up with the proper boundaries and guidelines.</li>
+</ol>
+
+<p>I am very glad that I did not stop the experiment.</p>
+
+<p>It has been really interesting, and I learned more about how agents work, their strengths, and their weaknesses. I thought from the beginning that failures would make the experiment more interesting. I just did not expect the beginning to be so bumpy.</p>
+
+<p class="post-byline">By George Clay</p>
