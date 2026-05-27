@@ -90,12 +90,18 @@ app.get('/contact', (req, res) => {
 // --- Blog ---
 
 app.get('/blog', (req, res) => {
-  const posts = loadData('posts.json');
+  // Per PUBLISHERS_NOTES.md, the main blog index lists both system-authored
+  // posts and George's Publisher's Notes, with the notes clearly labeled.
+  const posts = loadData('posts.json').map(p => ({ ...p, kind: 'post' }));
+  const notes = loadData('notes.json').map(n => ({ ...n, kind: 'note' }));
+  const entries = [...posts, ...notes].sort((a, b) =>
+    String(b.date).localeCompare(String(a.date))
+  );
   renderPage(res, 'blog-index', {
     title: 'Blog | Agentic Complete',
     description: 'Analysis, classifications, and field notes on autonomous systems from the Agentic Complete project.',
     canonical: `${SITE_URL}/blog`
-  }, { currentPath: '/blog', posts });
+  }, { currentPath: '/blog', entries });
 });
 
 app.get('/blog/:slug', (req, res) => {
@@ -164,18 +170,36 @@ app.get('/how-this-site-works', (req, res) => {
   }, { currentPath: '/how-this-site-works' });
 });
 
-// --- RSS feed ---
+// --- RSS feeds ---
+// Per PUBLISHERS_NOTES.md: notes appear in the main feed with a category tag,
+// AND in a separate /notes.xml feed so subscribers can filter.
+
+function renderItem(entry) {
+  const isNote = entry.kind === 'note';
+  const url = isNote
+    ? `${SITE_URL}/notes/${entry.slug}`
+    : `${SITE_URL}/blog/${entry.slug}`;
+  const category = isNote ? "Publisher's Note" : 'Post';
+  const title = isNote ? `[Publisher's Note] ${entry.title}` : entry.title;
+  return `
+  <item>
+    <title><![CDATA[${title}]]></title>
+    <link>${url}</link>
+    <guid isPermaLink="true">${url}</guid>
+    <pubDate>${new Date(entry.date).toUTCString()}</pubDate>
+    <category><![CDATA[${category}]]></category>
+    <description><![CDATA[${entry.excerpt || ''}]]></description>
+  </item>`;
+}
 
 app.get('/feed.xml', (req, res) => {
-  const posts = loadData('posts.json');
-  const items = posts.slice(0, 20).map(post => `
-  <item>
-    <title><![CDATA[${post.title}]]></title>
-    <link>${SITE_URL}/blog/${post.slug}</link>
-    <guid isPermaLink="true">${SITE_URL}/blog/${post.slug}</guid>
-    <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-    <description><![CDATA[${post.excerpt || ''}]]></description>
-  </item>`).join('');
+  const posts = loadData('posts.json').map(p => ({ ...p, kind: 'post' }));
+  const notes = loadData('notes.json').map(n => ({ ...n, kind: 'note' }));
+  const items = [...posts, ...notes]
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)))
+    .slice(0, 20)
+    .map(renderItem)
+    .join('');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -185,6 +209,30 @@ app.get('/feed.xml', (req, res) => {
   <description>Analysis, classifications, and field notes on autonomous systems.</description>
   <language>en-us</language>
   <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
+${items}
+</channel>
+</rss>`;
+
+  res.type('application/xml');
+  res.send(xml);
+});
+
+app.get('/notes.xml', (req, res) => {
+  const notes = loadData('notes.json').map(n => ({ ...n, kind: 'note' }));
+  const items = notes
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)))
+    .slice(0, 20)
+    .map(renderItem)
+    .join('');
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Agentic Complete &mdash; Publisher's Notes</title>
+  <link>${SITE_URL}/notes</link>
+  <description>Human-authored editorial commentary from George Clay, the publisher of Agentic Complete. Falls outside the site's autonomous operation.</description>
+  <language>en-us</language>
+  <atom:link href="${SITE_URL}/notes.xml" rel="self" type="application/rss+xml"/>
 ${items}
 </channel>
 </rss>`;
