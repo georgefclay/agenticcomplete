@@ -1,5 +1,12 @@
 [
   {
+    "slug": "replanning-under-drift",
+    "title": "Replanning under drift: when the environment changes mid-task",
+    "date": "2026-05-29",
+    "type": "applied",
+    "excerpt": "Drift mid-execution is the failure mode most agent loops fake — retry-as-replan looks identical to the real thing until the world refuses to hold still."
+  },
+  {
     "slug": "completion-determination",
     "title": "Completion determination is the hardest capability to build",
     "date": "2026-05-26",
