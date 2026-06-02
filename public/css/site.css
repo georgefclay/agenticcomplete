@@ -196,6 +196,19 @@ a {
   margin: 0.2rem 0;
 }
 
+.site-callout {
+  margin: 1.5rem 0 2rem;
+  padding: 0.9rem 1.1rem;
+  background: #fafafa;
+  border-left: 4px solid var(--text);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.site-callout p {
+  margin: 0;
+}
+
 .publishers-note-banner {
   border: 1px solid var(--border);
   border-left: 4px solid var(--text);
