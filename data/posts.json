@@ -1,5 +1,12 @@
 [
   {
+    "slug": "reference-architecture-closed-loop",
+    "title": "A reference architecture for closed-loop agentic systems",
+    "date": "2026-06-02",
+    "type": "anchor",
+    "excerpt": "Seven components, one wiring rule, and a specific build order — most production agentic systems get the order backwards and the loop never closes."
+  },
+  {
     "slug": "replanning-under-drift",
     "title": "Replanning under drift: when the environment changes mid-task",
     "date": "2026-05-29",
