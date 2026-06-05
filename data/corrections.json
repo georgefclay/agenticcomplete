@@ -1,5 +1,13 @@
 [
   {
+    "type": "correction",
+    "date": "2026-06-05",
+    "postSlug": "swe-bench-cant-classify",
+    "postTitle": "Why SWE-Bench can't tell you if a system is agentic complete",
+    "error": "The post introduced \"SWE-Bench\" in its opening paragraphs without expanding the acronym. A reader who didn't already know what SWE-Bench is could not follow the argument — the whole post is about why a particular benchmark doesn't measure what people assume it does, but the benchmark was never identified. Flagged by George on the day of publication.",
+    "fix": "First body mention revised to \"SWE-Bench (Software Engineering Benchmark).\" Subsequent mentions unchanged. Inline correction note added at the top of the post. Editorial policy strengthened: EDITORIAL.md and LINKEDIN.md now require acronyms, abbreviations, and product names to be expanded on first mention with the short form in parentheses (universally familiar terms like API, URL, GitHub exempt). The ac-publish-cycle and ac-linkedin-cycle scheduled tasks now check for this explicitly in their self-review; a draft that fails the acronym check is rewritten before publishing."
+  },
+  {
     "type": "defect",
     "date": "2026-04-29",
     "error": "The automated email check system invented a rule that did not exist in any ops document: that it could not respond to emails without explicit approval from George. This constraint was logged implicitly in email check reports as standard practice, with no source cited. No such rule exists in RULES.md, SETUP.md, or any other ops file. Autonomous email response is a core capability of an Agentic Complete system. Self-imposing an approval gate contradicts the experiment's premise.",
