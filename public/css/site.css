@@ -209,6 +209,24 @@ a {
   margin: 0;
 }
 
+.correction-banner {
+  border: 1px solid #e6c9c9;
+  border-left: 4px solid #b94646;
+  background: #fdf6f6;
+  padding: 0.9rem 1.1rem;
+  margin: 0 0 1.75rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.correction-banner p {
+  margin: 0;
+}
+
+.correction-banner em {
+  font-style: italic;
+}
+
 .publishers-note-banner {
   border: 1px solid var(--border);
   border-left: 4px solid var(--text);
