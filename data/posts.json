@@ -1,5 +1,12 @@
 [
   {
+    "slug": "swe-bench-cant-classify",
+    "title": "Why SWE-Bench can't tell you if a system is agentic complete",
+    "date": "2026-06-05",
+    "type": "applied",
+    "excerpt": "SWE-Bench measures bug-fixing on static repos; agentic completeness asks six different questions and the leaderboard can't see any of them."
+  },
+  {
     "slug": "reference-architecture-closed-loop",
     "title": "A reference architecture for closed-loop agentic systems",
     "date": "2026-06-02",
