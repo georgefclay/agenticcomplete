@@ -1,0 +1,18 @@
+[Unit]
+Description=AgenticComplete.com web app
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/agenticcomplete
+ExecStart=/usr/local/bin/node app.js
+Restart=always
+RestartSec=3
+Environment=NODE_ENV=production
+StandardOutput=append:/var/log/agenticcomplete.log
+StandardError=append:/var/log/agenticcomplete.log
+
+[Install]
+WantedBy=multi-user.target
