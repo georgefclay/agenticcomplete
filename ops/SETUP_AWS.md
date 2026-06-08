@@ -78,7 +78,9 @@ The script is idempotent (re-running is safe). It:
    `/etc/systemd/system/agenticcomplete.service` (`systemctl daemon-reload`).
 7. Installs `ops/deploy/agenticcomplete.caddy` to
    `/etc/caddy/sites/agenticcomplete.caddy` — **does not touch the main
-   Caddyfile or any other site's snippet.**
+   Caddyfile or any other site's snippet.** (Fresh-box only. On the
+   existing AWS box this path is a symlink into the clayindices repo —
+   see §6 for the centralized source-of-truth.)
 8. Installs `ops/deploy/agenticcomplete-sudoers` to
    `/etc/sudoers.d/agenticcomplete` after `visudo -c` validation — lets the
    `ubuntu` user run `systemctl restart agenticcomplete` without a password
@@ -192,12 +194,29 @@ Any token ever found committed is an immediate `IMMEDIATE` alert per
 
 ## 6. Caddy
 
+> **Source-of-truth moved (2026-06-07):** the live config at
+> `/etc/caddy/sites/agenticcomplete.caddy` is now a **symlink to
+> `/srv/clayindices-sites/scripts/sites/agenticcomplete.caddy`** in the
+> clayindices repo. All per-site Caddy snippets on this box are centralized
+> there; the clayindices `post-receive` hook reloads Caddy when any
+> `scripts/sites/*.caddy` changes. The copy at
+> `ops/deploy/agenticcomplete.caddy` in this repo is kept for first-time
+> provisioning (the install script in section 5 still writes it on a fresh
+> box), but **edits to that file are not picked up** unless they're also
+> committed to clayindices. Edit there and push; do not run the manual
+> `install`/`reload` snippet below on the existing box.
+
 This box uses a multi-site Caddy layout:
 
-- `/etc/caddy/Caddyfile` — minimal, contains only the global `email` and
-  `import sites/*.caddy`. **Never edit this file from a per-site deploy.**
-- `/etc/caddy/sites/<site>.caddy` — one snippet per site. agenticcomplete
-  installs `agenticcomplete.caddy` here.
+- `/etc/caddy/Caddyfile` — minimal, contains only the global `email`, the
+  `(access_log)` snippet, and `import sites/*.caddy`. **Never edit this
+  file from a per-site deploy.**
+- `/etc/caddy/sites/<site>.caddy` — one snippet per site. All are symlinks
+  into `/srv/clayindices-sites/scripts/sites/`. agenticcomplete's snippet
+  lives at `scripts/sites/agenticcomplete.caddy` in the clayindices repo.
+- Access logging is enabled globally via the `(access_log)` snippet; every
+  site block does `import access_log` and writes JSON to
+  `/var/log/caddy/access.log`.
 
 The agenticcomplete snippet does three things:
 
@@ -207,7 +226,12 @@ The agenticcomplete snippet does three things:
 - Sends HSTS, X-Content-Type-Options, and Referrer-Policy headers.
 - Auto-renews Let's Encrypt certs (Caddy handles renewal; no cron needed).
 
-Reload after edits:
+To edit the deployed snippet, change
+`clayindices/scripts/sites/agenticcomplete.caddy` and push. The
+clayindices post-receive hook validates and reloads Caddy automatically.
+
+Fresh-box manual install (only on a brand-new VM, before the symlink
+exists):
 
 ```bash
 sudo install -o root -g root -m 0644 \
@@ -217,9 +241,8 @@ sudo caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
 sudo systemctl reload caddy
 ```
 
-Caddy service logs: `sudo journalctl -u caddy -f`. (No per-site access log is
-configured by default — match what tronkits/ourinterview do here for
-consistency.)
+Caddy service logs: `sudo journalctl -u caddy -f`. Access logs (JSON,
+readable by `ubuntu` via ACL): `/var/log/caddy/access.log`.
 
 ---
 
@@ -276,7 +299,7 @@ The repo + GitHub is the system of record; the server is replaceable.
 | `ops/deploy/install.sh` | (not installed; piped from raw GitHub) | — | One-shot bootstrap |
 | `ops/deploy/pull.sh` | `/home/ubuntu/agenticcomplete/ops/deploy/pull.sh` | `ubuntu` / `0755` | The pull-and-restart loop |
 | `ops/deploy/agenticcomplete.service` | `/etc/systemd/system/agenticcomplete.service` | `root` / `0644` | systemd unit |
-| `ops/deploy/agenticcomplete.caddy` | `/etc/caddy/sites/agenticcomplete.caddy` | `root` / `0644` | per-site Caddy snippet |
+| `ops/deploy/agenticcomplete.caddy` | `/etc/caddy/sites/agenticcomplete.caddy` (fresh-box; **symlink to clayindices repo on the existing box** — see §6) | `root` / `0644` | per-site Caddy snippet |
 | `ops/deploy/agenticcomplete-sudoers` | `/etc/sudoers.d/agenticcomplete` | `root` / `0440` (visudo-validated) | lets `ubuntu` restart this one service |
 
 ---
