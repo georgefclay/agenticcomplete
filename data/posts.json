@@ -1,5 +1,12 @@
 [
   {
+    "slug": "agentic-complete-is-not-agi",
+    "title": "Agentic Complete is not AGI, and the difference matters",
+    "date": "2026-06-09",
+    "type": "anchor",
+    "excerpt": "Continuity of agency inside a bounded scope and generality of cognition are different axes; collapsing them is the error behind both the overclaiming and the dismissals."
+  },
+  {
     "slug": "swe-bench-cant-classify",
     "title": "Why SWE-Bench can't tell you if a system is agentic complete",
     "date": "2026-06-05",
