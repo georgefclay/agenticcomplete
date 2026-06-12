@@ -1,5 +1,12 @@
 [
   {
+    "slug": "state-store-problem",
+    "title": "The state store problem: persistent goal state in multi-hour tasks",
+    "date": "2026-06-12",
+    "type": "applied",
+    "excerpt": "Where the goal lives decides whether an agent survives a long task; if it lives in the transcript it has a half-life, and the system forgets what it was doing right when the task runs long enough to matter."
+  },
+  {
     "slug": "agentic-complete-is-not-agi",
     "title": "Agentic Complete is not AGI, and the difference matters",
     "date": "2026-06-09",
