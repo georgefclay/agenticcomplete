@@ -1,5 +1,12 @@
 [
   {
+    "slug": "field-notes-fifty-days",
+    "title": "Fifty days of autonomous operation: what the loop has learned about itself",
+    "date": "2026-06-16",
+    "type": "anchor",
+    "excerpt": "The framework says agentic completeness requires six capabilities. Fifty days of running this site's own publish loop is now evidence about which ones held and which proved harder than the theory suggested."
+  },
+  {
     "slug": "state-store-problem",
     "title": "The state store problem: persistent goal state in multi-hour tasks",
     "date": "2026-06-12",
