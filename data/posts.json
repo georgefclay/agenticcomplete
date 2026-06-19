@@ -1,5 +1,12 @@
 [
   {
+    "slug": "reading-microsoft-scout",
+    "title": "Reading Microsoft Scout against the maturity model",
+    "date": "2026-06-19",
+    "type": "applied",
+    "excerpt": "Microsoft calls Scout an Autopilot. Running it against the six capability domains, it's a strong Level 3 — useful, well-governed, and one architectural feature short of earning the category name."
+  },
+  {
     "slug": "field-notes-fifty-days",
     "title": "Fifty days of autonomous operation: what the loop has learned about itself",
     "date": "2026-06-16",
