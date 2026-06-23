@@ -1,5 +1,12 @@
 [
   {
+    "slug": "observation-the-skipped-capability",
+    "title": "Observation is the capability most agent loops skip",
+    "date": "2026-06-23",
+    "type": "anchor",
+    "excerpt": "Agents get built to plan and to act, but the capability that decides whether either one worked, observing what actually happened, is the one most loops fake with a retry."
+  },
+  {
     "slug": "reading-microsoft-scout",
     "title": "Reading Microsoft Scout against the maturity model",
     "date": "2026-06-19",
