@@ -1,5 +1,12 @@
 [
   {
+    "slug": "scaffolding-isnt-capability",
+    "title": "Scaffolding isn't capability",
+    "date": "2026-06-26",
+    "type": "applied",
+    "excerpt": "Wrapping a model in an agent framework gives a loop its shape, not its capabilities; the framework can route a step to a verifier, but it can't make the verifier right."
+  },
+  {
     "slug": "observation-the-skipped-capability",
     "title": "Observation is the capability most agent loops skip",
     "date": "2026-06-23",
