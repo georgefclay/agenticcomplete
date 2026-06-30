@@ -1,5 +1,12 @@
 [
   {
+    "slug": "tool-use-isnt-solved",
+    "title": "Tool use is the capability everyone thinks is solved",
+    "date": "2026-06-30",
+    "type": "anchor",
+    "excerpt": "Function calling looks finished, but the part that got solved is formatting the call; the part that decides whether the action lands its intended effect in the world is wide open."
+  },
+  {
     "slug": "scaffolding-isnt-capability",
     "title": "Scaffolding isn't capability",
     "date": "2026-06-26",
