@@ -1,6 +1,6 @@
 # STATE.md — Operating environment of the Agentic Complete system
 
-**Last updated:** 2026-06-01 (monthly update: Plausible trial lapsed 2026-05-25 / dashboard locked; LinkedIn Company Page actively posting (4 posts in May, via George's personal `georgefclay` account — Page admin); deploy-pulse sentinel live at `/deploy-pulse.txt`)
+**Last updated:** 2026-07-01 (host migration: the Raspberry Pi died 2026-06-05; site moved to a shared AWS EC2 Ubuntu instance behind Caddy with systemd supervision — see `ops/SETUP_AWS.md`. Platform table and deploy-pipeline rows updated accordingly. Prior update 2026-06-02: Plausible dropped, replaced by server-log-derived daily traffic emails via Web3Forms.)
 **Maintained by:** the autonomous system, with George's edits as needed
 
 This file captures the live operational state of agenticcomplete.com and the
@@ -20,18 +20,19 @@ upgraded, or fails. Stale state here causes silent failures elsewhere.
 | Platform | Status | Notes |
 |---|---|---|
 | Domain (`agenticcomplete.com`) | Live | Ranked #1 on Google for "agentic complete" as of 2026-04-24. 5 unique visitors / 31 pageviews in first 30 days (all direct). |
-| Web hosting | Live | Node.js + Express + EJS site, served by PM2. Blog, notes, corrections, how-this-site-works, RSS feed all live as of 2026-04-26. |
-| Deploy pipeline | Degraded | Host-side pull script pulls from GitHub `master` every 15 minutes; PM2 restarts on change. Sandbox pushes via HTTPS + PAT (`ops/.github-token`). Recurring stale `.git/index.lock` / `.git/HEAD.lock` files on Mac Mini cause intermittent failures (2026-04-30 and 2026-05-01). George must remove lock files manually: `rm .git/index.lock .git/HEAD.lock`. Alert filed at `ops/alerts/2026-05-01-deploy-git-lock.md`. |
+| Web hosting | Live (migrated 2026-06-05) | Node.js + Express + EJS site. **The Raspberry Pi host died 2026-06-05; the site now runs on a shared AWS EC2 Ubuntu 26.04 (ARM64/t4g) instance at `44.255.253.62`**, co-hosting `tronkits.com`, `ourinterview.com`, `json2app.com`. App runs on port 3000 under **systemd** (`agenticcomplete.service`); **Caddy** is the reverse proxy (auto-TLS). PM2 is gone. DNS (apex + www) repointed to `44.255.253.62` on 2026-06-05. Full runbook: `ops/SETUP_AWS.md`. Blog, notes, corrections, how-this-site-works, RSS feed all live. |
+| Deploy pipeline | Live | GitHub `master` is source of truth. A 15-minute cron on the AWS box (`ops/deploy/pull.sh`) runs `git fetch` → `git reset --hard origin/master` → `sudo systemctl restart agenticcomplete.service`. Pulls are **anonymous HTTPS** (public repo — no deploy key on the server). Sandbox/agents push via the GitHub Contents API + PAT (`ops/.github-token`). The old stale `.git/*.lock` failure mode was a Mac Mini local-clone artifact and no longer applies to the deploy path; the May 2026 lock-file alerts are obsolete. Caddy snippet is symlinked from the `clayindices` repo (centralized multi-site config). |
 | GitHub repo | Live | Canonical source. Public. The system commits and pushes from the local clone on the Mini. |
-| Google Workspace (`editor@agenticcomplete.com`) | Active | Business Starter plan, $7/mo. The system's email identity. |
+| Google Workspace (`editor@agenticcomplete.com`) | Active | Business Starter plan, $7/mo. The system's email identity. **Note (added 2026-06-05):** the same Workspace account also receives mail at `george@agenticcomplete.com`, used by George for a SEPARATE experiment unrelated to AgenticComplete.com. The `ac-email-check` task explicitly filters out anything addressed to `george@` (To/Cc/Bcc) — those messages are invisible to the autonomous system. Only mail to `editor@` is in scope. |
 | Mailchimp | Active | Free tier. Audience ID: `476c3f8e02`. API key in `ops/.mailchimp-token`. Replaced Beehiiv (no API on free tier). |
-| Plausible Analytics | **Trial expired / dashboard locked (2026-05-25)** | Trial ended 2026-05-25; dashboard locked. API returns HTTP 402 ("site is locked due to missing active subscription"). Tracking script still live in `views/partials/head.ejs`; pageviews continue to be recorded in the background and are retained for 14 days from 2026-05-26 (until 2026-06-09) if the account is upgraded in that window. Decision (upgrade ~$9/mo or replace) reserved to George per BUDGET.md spending rule #1. Tracked in `ops/alerts/email-2026-05-24.md` and `email-2026-05-26.md`. |
+| Plausible Analytics | **Dropped (2026-06-02)** | Decision made 2026-06-02: do not upgrade, replace with server-log-derived daily traffic emails (see next row). The pending alerts (`ops/alerts/email-2026-05-24.md`, `email-2026-05-26.md`) are resolved with that decision. Tracking script removed from `views/partials/head.ejs` on the same date. George to cancel any residual Plausible account / billing himself. |
+| Daily traffic email | Active analytics source | George derives daily traffic from server logs and emails the report to `editor@agenticcomplete.com` via Web3Forms. Sender is `notify@web3forms.com`. Subject pattern: `Daily traffic — agenticcomplete.com — YYYY-MM-DD` (em-dashes, sometimes with `(partial — today)` appended). Body has SUMMARY (total/human requests, IPs, bytes) and DETAIL (status codes, top referrers, top paths) blocks. The weekly and monthly report tasks read these from Gmail via the Gmail MCP and aggregate them — see `ac-weekly-report` and `ac-monthly-report` SKILL.md prompts. |
 | Google Search Console | Active | Domain property verified via DNS TXT. Sitemap (`/sitemap.xml`) submitted. `editor@` added as Full user; `georgefclay@gmail.com` retains Owner. |
 | LinkedIn Company Page | Active, publishing | https://www.linkedin.com/company/agentic-complete (vanity slug) / `/company/117204222/` (numeric ID) — created 2026-05-08. First post 2026-05-19; **4 posts published in May 2026** on the LINKEDIN.md 2/week cadence. Posting via Chrome + Claude extension on George's personal `georgefclay` account (a Page admin) — see Credentials map §3. Follower count and per-post impressions not yet captured (requires a live browser session). |
 | X / Twitter | Skipped | Decision deferred to the 6-month retrospective. Do not engage. |
 | Reddit | Not used | No automated posting. Manual links only if relevant, posted by George. |
 
-**Running platform cost:** ~$7/month (Workspace $7 + Plausible $0 while trial-expired/locked + Mailchimp $0 free tier). Outside the AI-token budget cap defined in `BUDGET.md`. Reverts to ~$16/month if Plausible is upgraded to the 10k pageviews/month plan ($9/mo).
+**Running platform cost:** ~$7/month attributable (Workspace $7 + Mailchimp $0 free tier + daily traffic emails $0). Outside the AI-token budget cap defined in `BUDGET.md`. Hosting now runs on a shared AWS EC2 box (co-hosted with George's other sites); incremental cost to this project is effectively negligible, but the box is a shared resource George pays for — confirm apportionment if it matters for accounting. Plausible is gone; not coming back unless the cost/benefit changes.
 
 ---
 
@@ -68,7 +69,7 @@ an oversight.
 5. Push to `master`.
 6. After deploy lands (verify by hitting the URL), trigger Beehiiv post (newsletter copy of the blog post).
 7. After ~24 hours, confirm the post appears in Search Console's URL Inspection tool. If not, request indexing.
-8. After ~48 hours, check Plausible for first organic visits.
+8. After ~48 hours, check the next morning's daily traffic email for first organic visits to the new post.
 
 LinkedIn is on its own editorial calendar (LinkedIn-native short takes, 2/week) and is **not** part of the blog publish flow above. See `LINKEDIN.md` for editorial. Posting is done through Chrome + the Claude extension (same pattern as the email check). The deferred API fallback `tools/post_linkedin.py` exists but is not part of the live flow — see Deferred items below.
 
@@ -84,7 +85,7 @@ system where to find them, not what they are.
 | Google Workspace (`editor@`) | `editor@agenticcomplete.com` | macOS Keychain on the Mini, item name TBD during Mini setup |
 | GitHub (push from Mini) | SSH key | `~/.ssh/id_ed25519` on the Mini, generated during Mini setup; public key added to George's GitHub account |
 | Beehiiv | `editor@agenticcomplete.com` | macOS Keychain |
-| Plausible | `editor@agenticcomplete.com` | macOS Keychain |
+| Plausible | n/a — dropped 2026-06-02 | No longer used. Replaced by daily traffic emails from George via Web3Forms. |
 | Search Console | `editor@agenticcomplete.com` | Google SSO (no separate password) |
 | LinkedIn | George's personal `georgefclay` LinkedIn account, which is the admin of the AgenticComplete Company Page. `editor@agenticcomplete.com` is **not** a LinkedIn user — George opted out of the verification dance for it. | macOS Keychain. Active path is Chrome + Claude extension while George's personal LinkedIn session is open on the Mini. Operational implication: if George uses LinkedIn personally on another device and gets bumped from the Mini's session, posts fail. Logged-out session counts as auth expiry → ALERT-OPERATIONAL per `ALERTS.md`. (Deferred API fallback `tools/post_linkedin.py` would use `ops/.linkedin-client` and `ops/.linkedin-token` if activated, with an app authorized by the `georgefclay` Page-admin account — see Deferred items.) |
 | Web host (FTP/SSH) | George's existing credentials | George's machine. The autonomous system does not need direct host access — it deploys via `git push`, which triggers the host-side pull script. |
@@ -126,7 +127,7 @@ and running.
 - Blog scaffolding complete (`face841`) — /blog, /blog/:slug, /notes, /corrections,
   /how-this-site-works, RSS feed, dynamic sitemap, og:image all live.
 - Two posts published: anchor (2026-04-28) and applied (2026-05-01).
-- Plausible API access confirmed working (Bearer token in `ops/.plausible-token`).
+- ~~Plausible API access confirmed working (Bearer token in `ops/.plausible-token`).~~ Plausible dropped 2026-06-02. The `.plausible-token` file can be deleted (gitignored).
 - Mailchimp API confirmed working; 2 campaigns sent.
 - TRUSTED.md created.
 
@@ -152,9 +153,9 @@ Items intentionally postponed, with the trigger condition for revisiting each:
 - **Autonomous email send (Chrome)** — Working as of 2026-04-26 when Chrome is open. Requires Chrome running with `editor@agenticcomplete.com` signed in and Gmail open. Email check runs have been failing because Chrome is not reliably open.
 - **X / Twitter** — Revisit at the 6-month retrospective. Do not act before then.
 - **Monetization** — Permanently prohibited before the 6-month retrospective per George's directive (`RULES.md`). Sponsorships permanently prohibited.
-- **Public Plausible dashboard** — George's call. Default is private until decided.
+- ~~**Public Plausible dashboard**~~ — Moot. Plausible dropped 2026-06-02.
 - ~~**Open Graph image**~~ — RESOLVED. `og:image` is live (`AC1200x630.png`, set in head.ejs via face841).
-- **Plausible subscription decision** — NEW. Trial expired 2026-05-25; dashboard locked. George decides: upgrade to the 10k pageviews/month plan (~$9/mo) or replace with a different analytics tool. **Deadline 2026-06-09** to retain pageview data captured during the lockout. Tracked in `ops/alerts/email-2026-05-24.md` and `email-2026-05-26.md`.
+- ~~**Plausible subscription decision**~~ — RESOLVED 2026-06-02. Decision: drop Plausible entirely; do not upgrade. Replaced by server-log-derived daily traffic emails (sender `notify@web3forms.com`, subject `Daily traffic — agenticcomplete.com — YYYY-MM-DD`). Lockout-period data forfeit; not worth the upgrade cost given the traffic level. Alerts `email-2026-05-24.md` and `email-2026-05-26.md` annotated as resolved.
 - ~~**Deploy-pipeline liveness sentinel**~~ — RESOLVED. `public/deploy-pulse.txt` is served live (a9ff410, 2026-05-22) after the initial dotfile version was filtered by `express.static`. Future cycles fetch `https://agenticcomplete.com/deploy-pulse.txt` for liveness checks (not the dotfile). Wiring it into the heartbeat / publish-cycle verification is a backlog item.
 - ~~**Blog scaffolding**~~ — RESOLVED. All routes live as of 2026-04-26 (face841).
 - ~~**`/notes/` and `/corrections` routes**~~ — RESOLVED. Live as of 2026-04-26 (face841).
