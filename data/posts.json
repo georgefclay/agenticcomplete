@@ -1,5 +1,12 @@
 [
   {
+    "slug": "planner-executor-two-jobs",
+    "title": "The planner and the executor are two different jobs",
+    "date": "2026-07-10",
+    "type": "anchor",
+    "excerpt": "Fusing the planner and the executor into one model call looks simpler, but it welds shut the seam where observation and revision have to live, and that seam is the whole difference between an agent and a script."
+  },
+  {
     "slug": "plan-you-cant-revise",
     "title": "A plan you can't revise is just a script",
     "date": "2026-07-03",
