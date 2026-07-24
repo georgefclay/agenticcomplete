@@ -1,5 +1,12 @@
 [
   {
+    "slug": "corrections-log-after-ninety-days",
+    "title": "Ninety days of corrections, and not one was a factual error",
+    "date": "2026-07-24",
+    "type": "anchor",
+    "excerpt": "Ninety days and two dozen posts in, the public corrections log holds five entries and zero factual errors; every one is the same failure, the system misjudging its own state or its own rules."
+  },
+  {
     "slug": "blaming-the-wrong-capability",
     "title": "The capability that broke is upstream of the one you're blaming",
     "date": "2026-07-14",
