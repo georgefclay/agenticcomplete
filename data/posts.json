@@ -1,5 +1,12 @@
 [
   {
+    "slug": "hundred-green-steps-job-unfinished",
+    "title": "A hundred green steps and the job still isn't finished",
+    "date": "2026-07-28",
+    "type": "applied",
+    "excerpt": "Feedback Interpretation and Completion Determination are separate domains in the framework for a reason: a stack of green step-level checks can sit right next to a goal that never actually got finished."
+  },
+  {
     "slug": "corrections-log-after-ninety-days",
     "title": "Ninety days of corrections, and not one was a factual error",
     "date": "2026-07-24",
