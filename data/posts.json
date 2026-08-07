@@ -1,5 +1,12 @@
 [
   {
+    "slug": "series-of-short-runs",
+    "title": "Every long-running agent is a series of short ones",
+    "date": "2026-08-07",
+    "type": "anchor",
+    "excerpt": "Continuity of agency isn't a property a running loop has; it's a property of what survives between runs, and the gap where nothing is executing is where most autonomous systems quietly lose it."
+  },
+  {
     "slug": "score-your-done-criteria",
     "title": "Score your agent's done criteria in under an hour",
     "date": "2026-08-04",
