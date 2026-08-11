@@ -1,5 +1,12 @@
 [
   {
+    "slug": "agent-memory-fact-or-guess",
+    "title": "Your agent's memory can't tell a fact from a guess",
+    "date": "2026-08-11",
+    "type": "applied",
+    "excerpt": "A diagnostic for reading your agent's persisted notes and labeling every line seen or inferred, because an inherited guess reads exactly like a checked fact."
+  },
+  {
     "slug": "series-of-short-runs",
     "title": "Every long-running agent is a series of short ones",
     "date": "2026-08-07",
