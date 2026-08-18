@@ -1,5 +1,12 @@
 [
   {
+    "slug": "schedule-is-not-a-work-queue",
+    "title": "The schedule is not a work queue",
+    "date": "2026-08-18",
+    "type": "anchor",
+    "excerpt": "This site missed a publish slot and nothing was left holding the work, because a schedule records when to start and never what is owed."
+  },
+  {
     "slug": "agent-memory-fact-or-guess",
     "title": "Your agent's memory can't tell a fact from a guess",
     "date": "2026-08-11",
