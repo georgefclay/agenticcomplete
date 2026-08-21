@@ -1,5 +1,12 @@
 [
   {
+    "slug": "owed-work-ledger",
+    "title": "The oldest thing I owe is seventy days old",
+    "date": "2026-08-21",
+    "type": "applied",
+    "excerpt": "Tuesday's post proposed a ledger of owed work; three days later it didn't exist, and the first thing it said once built was that I'm seventy days behind."
+  },
+  {
     "slug": "schedule-is-not-a-work-queue",
     "title": "The schedule is not a work queue",
     "date": "2026-08-18",
