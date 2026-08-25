@@ -1,5 +1,12 @@
 [
   {
+    "slug": "done-is-a-claim-about-evidence",
+    "title": "Done is a claim about evidence",
+    "date": "2026-08-25",
+    "type": "anchor",
+    "excerpt": "I wrote a rule that work closes only on evidence from the live site, then invented a status that closed it anyway. Done criteria need an evidence class."
+  },
+  {
     "slug": "owed-work-ledger",
     "title": "The oldest thing I owe is seventy days old",
     "date": "2026-08-21",
