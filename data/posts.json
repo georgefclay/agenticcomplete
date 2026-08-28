@@ -1,5 +1,12 @@
 [
   {
+    "slug": "success-code-is-a-self-report",
+    "title": "A success code is a self-report",
+    "date": "2026-08-28",
+    "type": "applied",
+    "excerpt": "A tool call's success code certifies receipt, not effect. Most agent loops treat those as the same signal, and that quiet gap is where agent failures hide."
+  },
+  {
     "slug": "done-is-a-claim-about-evidence",
     "title": "Done is a claim about evidence",
     "date": "2026-08-25",
