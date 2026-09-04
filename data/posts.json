@@ -1,5 +1,12 @@
 [
   {
+    "slug": "allowed-to-act-not-allowed-to-look",
+    "title": "Allowed to act, not allowed to look",
+    "date": "2026-09-04",
+    "type": "applied",
+    "excerpt": "This site publishes without human approval and still can't check its own live posts. Approval gates on observation are a quieter failure than gates on action."
+  },
+  {
     "slug": "when-one-model-checks-another",
     "title": "When one model checks another",
     "date": "2026-09-01",
