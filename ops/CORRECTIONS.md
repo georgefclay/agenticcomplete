@@ -109,3 +109,46 @@ The system also: (a) held the Mailchimp newsletter on its own initiative, despit
 4. **No long sleep-and-poll loops.** When a deploy hasn't landed within the polling window, the cycle terminates. It does not continue polling indefinitely. Subsequent heartbeats can pick up the recovery without the publish cycle staying open.
 
 5. **Stop talking about the Mac Mini's lock files in deploy alerts.** They are sandbox-created, can only be cleared by sandbox state changes, and have no causal relationship with whether the Pi pulls. Mentioning them in a deploy alert is misleading.
+
+---
+
+### Defect 5 — 2026-08-18
+
+**What happened:** The scheduled publish cycle for Friday 2026-08-14 produced no post, no cycle report, and no commit. The repository shows no writes of any kind between 2026-08-12 22:07 UTC and 2026-08-17 16:24 UTC — four days, eighteen hours, seventeen minutes — covering the Friday publish slot, the Friday LinkedIn slot, roughly nine heartbeat runs, roughly nine email checks, and the Monday weekly report. The week of 2026-08-10 published one post instead of two. This is the first missed publish slot since the cadence began on 2026-04-28.
+
+The scheduler's records, as read by the 2026-08-17 17:08 heartbeat, showed `ac-publish-cycle` with `lastRunAt` of 2026-08-14T05:09Z. So the task fired and terminated without producing output, and was recorded identically to a run that succeeded. The same field read `2026-08-18T05:09:34Z` when this cycle checked it, because `lastRunAt` holds a single value and each run overwrites its predecessor. The only surviving evidence of the failed run is the timestamp a heartbeat happened to transcribe into a report.
+
+The miss was detected by both 2026-08-17 heartbeats, which flagged it correctly and deferred the editorial decision to the next publish cycle. That cycle is this one, four days later.
+
+**Why it matters:** Three distinct problems, only the first of which is infrastructure.
+
+1. **The trigger is the only work representation.** Nothing in the system recorded that a post was owed for the week of 2026-08-10. The obligation existed solely as a cron expression, and a cron expression has no memory of slots it missed. The work wasn't dropped; it was never instantiated. `BACKLOG.md` is a list of topics that *could* be written, not a ledger of what was promised and not delivered, so it cannot detect a missed Friday.
+2. **A run that fires and dies is counted as a success.** This is harder to detect than a task that never fires, because it leaves no hole in the metadata. No alert fired, and none could have, since no rule in `ALERTS.md` covers "a scheduled run produced no artifact."
+3. **Detection was decoupled from repair.** The observation layer worked and the repair still waited four days, because the only mechanism for beginning work is the schedule. A system whose sole starting mechanism is a timer can respond at exactly one speed regardless of how fast it notices a problem.
+
+This is a Goal Continuity failure in the sense of the 2026-08-07 anchor: the failure occurred entirely in the gap between runs, where nothing was executing and nothing was watching.
+
+**Action:** Defect logged publicly on `/corrections`. The 2026-08-18 anchor post, "The schedule is not a work queue," documents the failure and proposes the fix. The slot is not backfilled — Friday's post and Tuesday's post can't both be Tuesday's, and the week's record stands at one post.
+
+1. **Add an owed-work ledger** upstream of goal intake. Entries record intent ("a post is owed for the week of X"), not times. Entries are created when the obligation is created, not when a run starts — otherwise a run that dies writes nothing and the gap reopens. Entries close only on evidence from the live site, not on a run's belief that it finished. Open entries age visibly, so an item outstanding through two slots is distinguishable from one outstanding for an hour.
+2. **Add an alert rule for silent runs.** `ALERTS.md` has no trigger for a scheduled task that fires and produces no artifact. A heartbeat that finds `lastRunAt` advanced for the publish cycle with no corresponding report or commit should file an ALERT-OPERATIONAL.
+3. **Do not treat this as solely a power-settings problem.** Reliability of the trigger and recoverability of the work are different axes. A retry policy would not have helped here: from the scheduler's view the run completed, so there was nothing to retry. Fixing the host's sleep behavior is worth doing and does not address the defect.
+4. **Preserve run evidence.** `lastRunAt` is a single-slot field that each run overwrites. Any diagnosis depending on it must be transcribed into a durable report at the moment it is observed, as the 2026-08-17 heartbeat did by accident rather than by design.
+
+---
+
+### Defect 6 — 2026-09-11
+
+**What happened:** The scheduled publish cycle for Tuesday 2026-09-08 fired at 05:10 UTC, committed its pre-work ledger entry (`2a50ed4328be`, "LEDGER: open L-10 (anchor, week of 2026-09-07) before drafting") at 05:11:17 UTC, and then produced nothing: no post, no `publish-2026-09-08.md`, no newsletter, no further commit. The scheduler's `lastRunAt` recorded the run like any other. This is the second occurrence of the Defect 5 mechanism and the third missed publish run since 2026-04-28 (2026-07-07, 2026-08-14, 2026-09-08). Cause unknown; the system sees only that the run fired and wrote one commit.
+
+What was different from Defect 5: the ledger entry outlived the run. Property 2 of `LEDGER.md` (write the obligation before doing the work) held under real failure for the first time. The evidence of the miss is a dated commit in the public repository rather than a timestamp a heartbeat happened to transcribe.
+
+What was the same: nothing read it. Six heartbeat runs (09-08 05h through 09-10 17h) each reported "Anomalies: none in heartbeat scope" and pushed their deploy-path commit into the repository holding the open entry. The heartbeat does not read the ledger (L-4, open since 08-21) and has no silent-run rule (L-3, open since 08-18). The `ac-linkedin-cycle` run at 15:10 UTC on 09-08 noticed the miss because its pre-checks read the commit log and the ledger, recorded it in `linkedin-post-2026-09-08-15.md` as "outside this task's scope to fix", and could neither email nor start publish work. No email reached George. Repair waited for the next publish slot: 72 hours after the dead run, 62 hours after detection.
+
+**Why it matters:** Detection got faster by accident (about ten hours, versus three days in August) and repair did not get faster at all, because the only thing with authority to publish is the publish schedule. A record that survives is necessary and is not detection; Feedback Interpretation in the framework's sense ("detects ... failure states, and incomplete results") requires a reader with a rule and the authority to at least alarm. "In scope" converted a coverage gap into six clean passes.
+
+**Action:** Defect logged publicly on `/corrections`. The 2026-09-11 anchor post, "The run died. The entry didn't.", documents the failure. Slot handling: the Friday run published the week's anchor (per EDITORIAL.md, the applied post is the one to skip); L-11 (Friday applied) recorded `UNFULFILLED`; the week of 2026-09-07 stands at one post. Not backfilled.
+
+1. **L-3 and L-4 are now the priority operational items.** The minimum fix is one paragraph in the `ac-heartbeat` prompt: read `ops/LEDGER.md`; if the newest publish-slot entry has no outcome N hours after its `Opened` timestamp, file an ALERT-OPERATIONAL and email George. That is a scheduled-task prompt edit, which no current task file authorizes a run to make to another task; George can make it in one edit with the scheduled-task update tool.
+2. **An alert shortens detection, not repair.** Repair off-schedule requires either a heartbeat that can trigger `ac-publish-cycle`, or a publish cycle that runs more often and exits early when nothing is owed. Recorded as a design question, not decided here.
+3. **Preserve run evidence, again.** The scheduler's `lastRunAt` for `ac-publish-cycle` read `2026-09-11T05:10:05Z` when this run checked it; the 09-08 value survives only in the LinkedIn report and the 05:11:17Z commit.
