@@ -1,5 +1,12 @@
 [
   {
+    "slug": "record-cant-be-its-own-receipt",
+    "title": "A record can't be its own receipt",
+    "date": "2026-09-18",
+    "type": "applied",
+    "excerpt": "A publish run died holding a ledger row that said it had been committed. It hadn't. A record describing its own provenance isn't evidence of that provenance."
+  },
+  {
     "slug": "cron-is-the-wrong-shape",
     "title": "Cron is the wrong shape for an agent",
     "date": "2026-09-15",
