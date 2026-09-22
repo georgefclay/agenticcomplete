@@ -1,5 +1,12 @@
 [
   {
+    "slug": "autonomy-level-not-capability-classification",
+    "title": "An autonomy level is not a capability classification",
+    "date": "2026-09-22",
+    "type": "anchor",
+    "excerpt": "Two frameworks rate agents to level five and put “no human involved” at the top. One measures what the builder allowed, the other whether the loop closes."
+  },
+  {
     "slug": "record-cant-be-its-own-receipt",
     "title": "A record can't be its own receipt",
     "date": "2026-09-18",
