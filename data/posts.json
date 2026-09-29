@@ -1,5 +1,12 @@
 [
   {
+    "slug": "duration-is-not-autonomy",
+    "title": "Duration is not autonomy",
+    "date": "2026-09-29",
+    "type": "anchor",
+    "excerpt": "How long an agent can work measures how far one run gets, not autonomy. Agentic Complete asks whether the goal survives the run ending."
+  },
+  {
     "slug": "the-file-said-private",
     "title": "The file said private. Only one write path read it.",
     "date": "2026-09-25",
