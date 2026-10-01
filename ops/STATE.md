@@ -1,6 +1,6 @@
 # STATE.md — Operating environment of the Agentic Complete system
 
-**Last updated:** 2026-08-01 (LinkedIn: vanity slug `agentic-complete` stopped resolving ~2026-07-24 — use numeric Page ID `117204222` for all URLs; Page at 7 followers. Prior update 2026-07-01: host migration — the Raspberry Pi died 2026-06-05; site moved to a shared AWS EC2 Ubuntu instance behind Caddy with systemd supervision — see `ops/SETUP_AWS.md`. Prior update 2026-06-02: Plausible dropped, replaced by server-log-derived daily traffic emails via Web3Forms.)
+**Last updated:** 2026-10-01 (monthly update 2026-09: §2 pipeline description corrected to the GitHub Contents API + EC2/systemd path; live-URL verification now working from scheduled runs (09-25, 09-29); `.gitignore` does not gate the Contents API — private-directory files are on public `master`; local Mini clone is a write-only mirror; scheduled-task runtime model moved Fable 5 → Opus 5 on 09-18 after Defect 7; heartbeat slots shifted to 10:05/22:05 UTC on 09-23; LinkedIn Page at 9 followers. Prior update 2026-08-01: LinkedIn: vanity slug `agentic-complete` stopped resolving ~2026-07-24 — use numeric Page ID `117204222` for all URLs; Page at 7 followers. Prior update 2026-07-01: host migration — the Raspberry Pi died 2026-06-05; site moved to a shared AWS EC2 Ubuntu instance behind Caddy with systemd supervision — see `ops/SETUP_AWS.md`. Prior update 2026-06-02: Plausible dropped, replaced by server-log-derived daily traffic emails via Web3Forms.)
 **Maintained by:** the autonomous system, with George's edits as needed
 
 This file captures the live operational state of agenticcomplete.com and the
@@ -21,14 +21,14 @@ upgraded, or fails. Stale state here causes silent failures elsewhere.
 |---|---|---|
 | Domain (`agenticcomplete.com`) | Live | Ranked #1 on Google for "agentic complete" as of 2026-04-24. 5 unique visitors / 31 pageviews in first 30 days (all direct). |
 | Web hosting | Live (migrated 2026-06-05) | Node.js + Express + EJS site. **The Raspberry Pi host died 2026-06-05; the site now runs on a shared AWS EC2 Ubuntu 26.04 (ARM64/t4g) instance at `44.255.253.62`**, co-hosting `tronkits.com`, `ourinterview.com`, `json2app.com`. App runs on port 3000 under **systemd** (`agenticcomplete.service`); **Caddy** is the reverse proxy (auto-TLS). PM2 is gone. DNS (apex + www) repointed to `44.255.253.62` on 2026-06-05. Full runbook: `ops/SETUP_AWS.md`. Blog, notes, corrections, how-this-site-works, RSS feed all live. |
-| Deploy pipeline | Live | GitHub `master` is source of truth. A 15-minute cron on the AWS box (`ops/deploy/pull.sh`) runs `git fetch` → `git reset --hard origin/master` → `sudo systemctl restart agenticcomplete.service`. Pulls are **anonymous HTTPS** (public repo — no deploy key on the server). Sandbox/agents push via the GitHub Contents API + PAT (`ops/.github-token`). The old stale `.git/*.lock` failure mode was a Mac Mini local-clone artifact and no longer applies to the deploy path; the May 2026 lock-file alerts are obsolete. Caddy snippet is symlinked from the `clayindices` repo (centralized multi-site config). |
-| GitHub repo | Live | Canonical source. Public. The system commits and pushes from the local clone on the Mini. |
+| Deploy pipeline | Live | GitHub `master` is source of truth. A 15-minute cron on the AWS box (`ops/deploy/pull.sh`) runs `git fetch` → `git reset --hard origin/master` → `sudo systemctl restart agenticcomplete.service`. Pulls are **anonymous HTTPS** (public repo — no deploy key on the server). Sandbox/agents push via the GitHub Contents API + PAT (`ops/.github-token`). The old stale `.git/*.lock` failure mode was a Mac Mini local-clone artifact and no longer applies to the deploy path; the May 2026 lock-file alerts are obsolete. Caddy snippet is symlinked from the `clayindices` repo (centralized multi-site config). **Live-URL verification (added 2026-10-01):** after 23–25 blind cycles, scheduled publish runs fetched and confirmed the live post URL on 2026-09-25 and 2026-09-29 (direct HTTP from the device shell; the task's `web_fetch` provenance block persists, so ledger item L-1 stays formally open). Known defect: publishes land as 2–4 duplicate commits (harmless). |
+| GitHub repo | Live | Canonical source. Public. **All system writes go through the GitHub Contents API** (one commit per file); nothing commits from the local clone. **The local clone on the Mini is a write-only mirror** — runs write files locally *and* push via the API, but nothing pulls, so the clone is hundreds of commits behind `origin/master` and files created only via the API (e.g. `ops/.heartbeat`) never appear locally. Do not use local `git log` as a publish signal; read the log via the API. **`.gitignore` does not gate the Contents API** (it governs `git add` only): a run that pushes a file under `ops/reports/` or `ops/alerts/` puts it on public `master`. ~10 such files were on `master` as of 2026-09-25 (credential scan clean; disposition pending George). Cycle reports are written to local disk only. |
 | Google Workspace (`editor@agenticcomplete.com`) | Active | Business Starter plan, $7/mo. The system's email identity. **Note (added 2026-06-05):** the same Workspace account also receives mail at `george@agenticcomplete.com`, used by George for a SEPARATE experiment unrelated to AgenticComplete.com. The `ac-email-check` task explicitly filters out anything addressed to `george@` (To/Cc/Bcc) — those messages are invisible to the autonomous system. Only mail to `editor@` is in scope. |
 | Mailchimp | Active | Free tier. Audience ID: `476c3f8e02`. API key in `ops/.mailchimp-token`. Replaced Beehiiv (no API on free tier). |
 | Plausible Analytics | **Dropped (2026-06-02)** | Decision made 2026-06-02: do not upgrade, replace with server-log-derived daily traffic emails (see next row). The pending alerts (`ops/alerts/email-2026-05-24.md`, `email-2026-05-26.md`) are resolved with that decision. Tracking script removed from `views/partials/head.ejs` on the same date. George to cancel any residual Plausible account / billing himself. |
 | Daily traffic email | Active analytics source | George derives daily traffic from server logs and emails the report to `editor@agenticcomplete.com` via Web3Forms. Sender is `notify@web3forms.com`. Subject pattern: `Daily traffic — agenticcomplete.com — YYYY-MM-DD` (em-dashes, sometimes with `(partial — today)` appended). Body has SUMMARY (total/human requests, IPs, bytes) and DETAIL (status codes, top referrers, top paths) blocks. The weekly and monthly report tasks read these from Gmail via the Gmail MCP and aggregate them — see `ac-weekly-report` and `ac-monthly-report` SKILL.md prompts. |
 | Google Search Console | Active | Domain property verified via DNS TXT. Sitemap (`/sitemap.xml`) submitted. `editor@` added as Full user; `georgefclay@gmail.com` retains Owner. |
-| LinkedIn Company Page | Active, publishing | **Use numeric ID `/company/117204222/` only — the vanity slug `agentic-complete` stopped resolving ~2026-07-24** (redirects to `/company/unavailable/`; a run that checks the slug URL will misread it as an auth failure). Page created 2026-05-08; posting on the LINKEDIN.md 2/week cadence since 2026-05-19. **7 followers as of 2026-07-24.** Posting via Chrome + Claude extension on George's personal `georgefclay` account (a Page admin) — see Credentials map §3. Per-post impressions still not captured (requires a live browser session). |
+| LinkedIn Company Page | Active, publishing | **Use numeric ID `/company/117204222/` only — the vanity slug `agentic-complete` stopped resolving ~2026-07-24** (redirects to `/company/unavailable/`; a run that checks the slug URL will misread it as an auth failure). Page created 2026-05-08; posting on the LINKEDIN.md 2/week cadence since 2026-05-19 (9/9 posts in September). **9 followers as of 2026-09-28** (7 on 07-24; 9 since ~08-25). Posting via Chrome + Claude extension on George's personal `georgefclay` account (a Page admin) — see Credentials map §3. Per-post impressions were read for the first time on 2026-09-28 from the Page admin Content analytics tab (87 impressions / 1 reaction over the prior 30 days); the method works but is not yet a step in the `ac-linkedin-cycle` prompt. |
 | X / Twitter | Skipped | Decision deferred to the 6-month retrospective. Do not engage. |
 | Reddit | Not used | No automated posting. Manual links only if relevant, posted by George. |
 
@@ -40,14 +40,25 @@ upgraded, or fails. Stale state here causes silent failures elsewhere.
 
 The full path from system-generated content to live page:
 
-1. System edits files in the local clone of the repo on the Mini.
-2. System runs `git add`, `git commit`, `git push` to the GitHub `master` branch.
-3. The web host's pull script (running every 15 minutes) detects the change.
-4. The host runs `git pull`, then PM2 restarts the Node process.
-5. The change is live within ~15 minutes of `git push`.
+1. System writes the file to the local clone on the Mini (local disk only — see §1, "GitHub repo").
+2. System pushes the same bytes to GitHub `master` via the **GitHub Contents API** (`PUT /repos/.../contents/<path>`, PAT in `ops/.github-token`, one commit per file) per `Claude_use_this_every_time_you_need_to_git_commit.md`. **Never local `git add`/`commit`/`push` from the sandbox.**
+3. The AWS host's 15-minute cron (`ops/deploy/pull.sh`) fetches, hard-resets to `origin/master`, and restarts `agenticcomplete.service` under systemd.
+4. The change is live within ~15 minutes of the API commit.
+5. The run reads the file back from `master` (byte-identical check) and, since 2026-09-25, fetches the live URL to confirm (ledger property 3).
 
 The same pipeline applies to blog posts, framework edits, corrections, and
-Publisher's Notes (which George commits manually, also via the same flow).
+Publisher's Notes (which George commits manually, from his own clone).
+
+**Scheduled-task runtime (recorded 2026-10-01):** the scheduler's own model
+was `claude-fable-5-1` for every run through 2026-09-18 00:12 CDT, when the
+publish cycle died on a session usage limit (Defect 7); runs from 09-18 05:07
+onward execute on `claude-opus-5`. That change coincided with an app update
+and is not known to be a pinned setting. Drafting model policy (anchor = Opus
+tier, applied = Sonnet, never Fable 5) is enforced inside the task prompts and
+held for every September post. Heartbeat slots moved from ~05:05/17:05 UTC to
+10:05/22:05 UTC on 2026-09-23 (publish 05:0x UTC, LinkedIn 15:0x UTC).
+Three of nine September publish fires failed (09-08 dead, 09-11 partial, 09-18
+dead) with no alert — `ALERTS.md` has no silent-run rule (ledger L-3).
 
 **There is no FTP step.** A `.github/workflows/deploy.yml` file exists in the
 repo as a dormant backup, but FTP secrets are intentionally not configured.
@@ -138,8 +149,11 @@ and running.
   API access (OAuth setup deferred per `ops/SETUP.md`).
 - LinkedIn Company Page — RESOLVED, see line above. Page is live; editorial policy in `LINKEDIN.md`. Active posting via Chrome + Claude extension while Chrome on the Mini is signed into LinkedIn as George's personal `georgefclay` account (the Page admin). `editor@agenticcomplete.com` has no LinkedIn account by design. Same Chrome-availability caveat that affects the email check.
 - Search Console API access — data remains a blind spot in automated reports.
-- Stale git lock files (`.git/index.lock`, `.git/HEAD.lock`) on Mac Mini require
-  George's manual removal before deploy pipeline is fully reliable.
+- ~~Stale git lock files on Mac Mini~~ — moot since all writes moved to the
+  Contents API; lock files have no effect on the deploy path (see §1, §2).
+- Local clone drift: the Mini clone is a write-only mirror (hundreds of commits
+  behind `origin/master`). A `git pull` by George, or an explicit decision that
+  the clone need not sync, is pending (raised 2026-09-21).
 
 ---
 
@@ -160,7 +174,9 @@ Items intentionally postponed, with the trigger condition for revisiting each:
 - ~~**Blog scaffolding**~~ — RESOLVED. All routes live as of 2026-04-26 (face841).
 - ~~**`/notes/` and `/corrections` routes**~~ — RESOLVED. Live as of 2026-04-26 (face841).
 - **Search Console API access** — Required for automated search performance data. Not yet configured. Manual dashboard login remains the only access path.
-- **Git lock file cleanup** — Stale lock files accumulate when sandbox sessions are interrupted. Cannot be removed from sandbox (permission denied on FUSE mount). George must remove manually from macOS Terminal as needed.
+- ~~**Git lock file cleanup**~~ — Moot. No run uses local git; the Contents API path is unaffected by lock files.
+- **Private files on public `master`** (since 2026-09-21 finding) — `.gitignore` never gated the Contents API; ~10 `ops/reports/` / `ops/alerts/` blobs are public. Options: leave and fix the wording; delete the blobs via the API; add a never-write guard to the publish-cycle task file. George's call.
+- **Silent-run alert rule and ledger wiring (L-3, L-4)** — one paragraph in the `ac-heartbeat` prompt; four incidents without an alert as of 2026-09-18.
 
 ---
 
