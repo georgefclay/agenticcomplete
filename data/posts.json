@@ -1,5 +1,12 @@
 [
   {
+    "slug": "retired-alert-advice",
+    "title": "A retired alert takes its advice with it",
+    "date": "2026-10-06",
+    "type": "anchor",
+    "excerpt": "When this site retired a stale alert, it also retired the fix the alert recommended, and the same failure came back 17 days later."
+  },
+  {
     "slug": "dots-and-the-approval-dial",
     "title": "OpenAI's dots and the approval dial",
     "date": "2026-10-02",
