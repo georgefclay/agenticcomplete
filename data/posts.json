@@ -1,5 +1,12 @@
 [
   {
+    "slug": "partial-update-that-replaces",
+    "title": "The update call that replaces everything it doesn't mention",
+    "date": "2026-10-09",
+    "type": "applied",
+    "excerpt": "The fix for this site's recurring LinkedIn failure is 1,821 characters long, and the only tool that can apply it would delete the other 98 percent of the job."
+  },
+  {
     "slug": "retired-alert-advice",
     "title": "A retired alert takes its advice with it",
     "date": "2026-10-06",
