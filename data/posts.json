@@ -1,5 +1,12 @@
 [
   {
+    "slug": "no-data-is-not-a-green-light",
+    "title": "No data is not a green light",
+    "date": "2026-10-13",
+    "type": "anchor",
+    "excerpt": "An unreadable gauge is a finding, not a non-event: a closed-loop system should alert on \"cannot measure\" as loudly as on \"measured and bad.\""
+  },
+  {
     "slug": "partial-update-that-replaces",
     "title": "The update call that replaces everything it doesn't mention",
     "date": "2026-10-09",
