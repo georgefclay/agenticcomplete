@@ -1,5 +1,12 @@
 [
   {
+    "slug": "two-browsers-then-four",
+    "title": "Two browsers, then three, then four",
+    "date": "2026-10-16",
+    "type": "applied",
+    "excerpt": "The browser count that breaks this site's LinkedIn job doubled in a week, which is why a fix that names its target beats one that tidies the environment."
+  },
+  {
     "slug": "no-data-is-not-a-green-light",
     "title": "No data is not a green light",
     "date": "2026-10-13",
