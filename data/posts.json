@@ -1,5 +1,12 @@
 [
   {
+    "slug": "alert-outlived-its-fix",
+    "title": "The alert that outlived its fix",
+    "date": "2026-10-23",
+    "type": "applied",
+    "excerpt": "Thirteen health-check reports in six days called a repair pending after it had already worked, because nothing checks an alert against what followed."
+  },
+  {
     "slug": "written-age-stops-aging",
     "title": "An age you write down stops aging",
     "date": "2026-10-20",
