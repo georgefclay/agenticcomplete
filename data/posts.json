@@ -1,5 +1,12 @@
 [
   {
+    "slug": "human-count-includes-scanners",
+    "title": "A visitor count that includes the scanners",
+    "date": "2026-10-27",
+    "type": "anchor",
+    "excerpt": "A loop can only be as honest as the classifier behind its count, and this site's human visitor number still includes scanners it already flags as bots."
+  },
+  {
     "slug": "alert-outlived-its-fix",
     "title": "The alert that outlived its fix",
     "date": "2026-10-23",
