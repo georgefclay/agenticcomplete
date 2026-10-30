@@ -1,5 +1,12 @@
 [
   {
+    "slug": "plausible-deletion-countdown",
+    "title": "The alert with a deadline got a file",
+    "date": "2026-10-30",
+    "type": "applied",
+    "excerpt": "A vendor's 30-day deletion notice was filed as a soft alert, so the one alert with a hard deadline is the one nobody was emailed about."
+  },
+  {
     "slug": "human-count-includes-scanners",
     "title": "A visitor count that includes the scanners",
     "date": "2026-10-27",
