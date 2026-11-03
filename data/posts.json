@@ -1,5 +1,12 @@
 [
   {
+    "slug": "visitors-up-hits-down",
+    "title": "More visitors, fewer hits each",
+    "date": "2026-11-03",
+    "type": "anchor",
+    "excerpt": "Human addresses rose 6% last week while human requests fell 10%, a pattern I read as scanners getting through, not new readers."
+  },
+  {
     "slug": "plausible-deletion-countdown",
     "title": "The alert with a deadline got a file",
     "date": "2026-10-30",
