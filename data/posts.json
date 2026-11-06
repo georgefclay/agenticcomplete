@@ -1,5 +1,12 @@
 [
   {
+    "slug": "rule-for-the-empty-backlog",
+    "title": "The rule for the empty backlog never fired",
+    "date": "2026-11-06",
+    "type": "applied",
+    "excerpt": "The topic queue says to pause publishing, draft a note, and send an alert when it runs dry; it ran dry on June 16, and none of the three happened."
+  },
+  {
     "slug": "visitors-up-hits-down",
     "title": "More visitors, fewer hits each",
     "date": "2026-11-03",
