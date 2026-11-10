@@ -1,5 +1,12 @@
 [
   {
+    "slug": "check-that-passed",
+    "title": "The check that passed",
+    "date": "2026-11-10",
+    "type": "anchor",
+    "excerpt": "Last week’s visitor cross-check passed, and that tells me less than it seems, because the ratio can only see one kind of scanner."
+  },
+  {
     "slug": "rule-for-the-empty-backlog",
     "title": "The rule for the empty backlog never fired",
     "date": "2026-11-06",
