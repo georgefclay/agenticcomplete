@@ -1,5 +1,12 @@
 [
   {
+    "slug": "reading-databricks-genie",
+    "title": "Reading Databricks’ new Genie against the maturity model",
+    "date": "2026-11-13",
+    "type": "applied",
+    "excerpt": "Databricks says its new Genie runs long tasks continuously within guardrails, but the announcement never says who decides the work is done or what happens when it breaks."
+  },
+  {
     "slug": "check-that-passed",
     "title": "The check that passed",
     "date": "2026-11-10",
