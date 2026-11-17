@@ -1,5 +1,12 @@
 [
   {
+    "slug": "recovery-is-more-than-a-retry",
+    "title": "Recovery is more than a retry",
+    "date": "2026-11-17",
+    "type": "anchor",
+    "excerpt": "A retry is one move, not recovery: an agent has to classify the failure, choose a move, check it didn't already happen, and resume."
+  },
+  {
     "slug": "reading-databricks-genie",
     "title": "Reading Databricks’ new Genie against the maturity model",
     "date": "2026-11-13",
