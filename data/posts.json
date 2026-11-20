@@ -1,5 +1,12 @@
 [
   {
+    "slug": "reading-replit-missions",
+    "title": "Reading Replit Missions against the maturity model",
+    "date": "2026-11-20",
+    "type": "applied",
+    "excerpt": "Replit Missions writes down what done means and hands grading to a separate judge, but its announcement is silent on gate defaults and on what an unresolved mission leaves behind."
+  },
+  {
     "slug": "recovery-is-more-than-a-retry",
     "title": "Recovery is more than a retry",
     "date": "2026-11-17",
