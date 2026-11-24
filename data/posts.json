@@ -1,5 +1,12 @@
 [
   {
+    "slug": "question-at-the-start",
+    "title": "A question at the start isn't a handoff",
+    "date": "2026-11-24",
+    "type": "anchor",
+    "excerpt": "An agentic complete system can ask you a question; it just can't stop and wait for the answer, and when it asks decides which level it's at."
+  },
+  {
     "slug": "reading-replit-missions",
     "title": "Reading Replit Missions against the maturity model",
     "date": "2026-11-20",
