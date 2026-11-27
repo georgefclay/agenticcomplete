@@ -1,5 +1,12 @@
 [
   {
+    "slug": "reading-google-semantic-governance",
+    "title": "Reading Google’s semantic governance policies against the maturity model",
+    "date": "2026-11-27",
+    "type": "applied",
+    "excerpt": "Google now checks each agent tool call against written rules and the user's request before it runs, but its docs stop at the denial and never say what the agent does next."
+  },
+  {
     "slug": "question-at-the-start",
     "title": "A question at the start isn't a handoff",
     "date": "2026-11-24",
